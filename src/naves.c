@@ -347,9 +347,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                 }
                 carimbado = true;
             }
-            else{
-                carimbado = false;
-            }
             break;
         
         case 1:
@@ -361,9 +358,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                     Carimbo_Fighter_Negativo(tela,x,y);
                 }
                 carimbado = true;
-            }
-            else{
-                carimbado = false;
             }
         break;
 
@@ -377,9 +371,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                 }
                 carimbado = true;
             }
-            else{
-                carimbado = false;
-            }
         break;
 
         case 3:
@@ -391,9 +382,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                     Carimbo_Interceptor_Negativo(tela,x,y);
                 }
                 carimbado = true;
-            }
-            else{
-                carimbado = false;
             }
         break;
 
@@ -407,9 +395,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                 }
                 carimbado = true;
             }
-            else{
-                carimbado = false;
-            }
         break;
 
         case 5:
@@ -422,9 +407,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                 }
                 carimbado = true;
             }
-            else{
-                carimbado = false;
-            }
         break;
 
         case 6:
@@ -436,9 +418,6 @@ bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index
                     Carimbo_XWing_Negativo(tela,x,y);
                 }
                 carimbado = true;
-            }
-            else{
-                carimbado = false;
             }
         break;       
     }

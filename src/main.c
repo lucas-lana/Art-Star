@@ -1,3 +1,4 @@
+// Podem existir seeds que não tem como gerar uma figura válida
 #include "Pintura.c"
 #include "menus.c"
 #include "carimbos.c"

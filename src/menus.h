@@ -2,6 +2,8 @@
 #define MENUS_H
 
 #include "celula.h"
+#define LINHAS 20
+#define COLUNAS 80
 
 int Menu_seed();
 int Menu_Quantidade();

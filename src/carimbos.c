@@ -60,17 +60,11 @@ bool Carimbo_Aleatorio(celula tela[LINHAS][COLUNAS], int i, int j,int tipo){
                 Carimbo_Estrela(tela,i,j);
                 carimbado = true;
             }
-            else{
-                carimbado = false;
-            }
             break;
         case 1:
             if (Verificar_Espaço(tela,i,j)){
                 Carimbo_Soma(tela,i,j);
                 carimbado = true;
-            }
-            else{
-                carimbado = false;
             }
             break;
         case 2:
@@ -78,12 +72,35 @@ bool Carimbo_Aleatorio(celula tela[LINHAS][COLUNAS], int i, int j,int tipo){
                 Carimbo_X(tela,i,j);
                 carimbado = true;
             }
-            else{
-                carimbado = false;
-            }
             break;
     }
     return carimbado;
+}
+
+char** inverte_carimbo(char** carimbo,int linhas,int colunas) {
+    char **invertido = (char **)malloc(linhas * sizeof(char *));
+    for(int i = 0; i < linhas; i++) {
+        invertido[i] = (char *)malloc(colunas * sizeof(char));
+    }
+    
+    for(int i = 0; i < linhas; i++) {
+        for(int j = 0; j < colunas; j++) {
+            invertido[linhas-1-i][j] = carimbo[i][j];
+        }
+    }
+
+    return invertido;
+}
+
+bool verificar_Espaco(celula** tela, int ref_i, int ref_j, int linhas_carimbo, int colunas_carimbo) {
+    for (int i = 0; i < linhas_carimbo; i++) {
+        for ( int j = 0; i < colunas_carimbo; j++) {
+            if (tela [ref_i + i][ref_j + j].preenchido == true) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 #endif // CARIMBOS_C

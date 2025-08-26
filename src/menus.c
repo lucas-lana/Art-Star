@@ -1,9 +1,6 @@
 #include "Inspec.c"
 #include "menus.h"
 
-#define LINHAS 20
-#define COLUNAS 80
-
 int Menu_Seed(){
     int escolha;
     srand(time(NULL));
