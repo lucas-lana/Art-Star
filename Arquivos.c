@@ -139,10 +139,16 @@ Carimbos_Num* get_Carimbos(char* caminho) {
         return NULL;
     }
 
-    Carimbos_Num* carimbo_array = malloc(num_carimbos * sizeof(Carimbos_Num));
-    carimbo_array->quantidade = num_carimbos;
+    Carimbos_Num* carimbo_array = malloc(sizeof(Carimbos_Num));
     if (!carimbo_array) {
         printf("Erro ao alocar memória para carimbo_array\n");
+        return NULL;
+    }
+    carimbo_array->quantidade = num_carimbos;
+    carimbo_array->carimbos = malloc(num_carimbos * sizeof(Carimbo));
+    if (!carimbo_array->carimbos) {
+        printf("Erro ao alocar memória para carimbos\n");
+        free(carimbo_array);
         return NULL;
     }
 
@@ -277,7 +283,7 @@ ConjuntoCarimbos* carrega_Carimbos(int numPastas, char* caminho){
             pastas_Carimbos[index].quantidade = aux->quantidade;
             free(aux);
 
-            for (int i = 0; i <= pastas_Carimbos[index].quantidade; i++) {
+            for (int i = 0; i < pastas_Carimbos[index].quantidade; i++) {
                 printf("Carimbo encontrado: %s\n", pastas_Carimbos[index].carimbos[i].nome);
             }
         }
