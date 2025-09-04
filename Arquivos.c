@@ -2,9 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
+#include <sys/stat.h>
+
 #include "arquivos.h"
 
 #include "carimbos.h"
+
+
+#define CAMINHO "/home/Lucas/Documentos/Codes/C/Trabalhos/Art-Star/carimbos"
+
 
 char* ler_carimbo(char* caminho) {
     FILE* leitor = fopen(caminho, "r");
@@ -60,7 +66,7 @@ Arquivo* acessar_Diretorio(char* caminho) {
     }
     closedir(dir);
 
-    Arquivo* carimbos = (Arquivo*)malloc((count) * sizeof(Arquivo));
+    Arquivo* carimbos = (Arquivo*)malloc((count + 1) * sizeof(Arquivo));
     if (carimbos == NULL) {
         perror("Erro ao alocar memória para carimbos");
         return NULL;
@@ -80,6 +86,8 @@ Arquivo* acessar_Diretorio(char* caminho) {
             i++;
         }
     }
+    // NULL-terminate the array
+    carimbos[i].nome = NULL;
     closedir(dir);
     return carimbos;
 }
@@ -112,7 +120,7 @@ int* get_dim_Carimbo(char* carimbo_texto){
  * Expected Output: Processes each carimbo line from each file; currently does not return or print,
  *                  but can be modified to store or display the results as needed.
  */
-Carimbo* get_Carimbos(char* caminho) {
+Carimbos_Num* get_Carimbos(char* caminho) {
     Arquivo* carimbos = acessar_Diretorio(caminho);
     if (!carimbos) {
         printf("Nenhum carimbo encontrado no caminho: %s\n", caminho);
@@ -124,11 +132,6 @@ Carimbo* get_Carimbos(char* caminho) {
     while (carimbos[num_carimbos].nome != NULL) {
         num_carimbos++;
     }
-    num_carimbos--;
-
-    // Only decrement if there's a sentinel at the end
-    // If acessar_Diretorio returns array ending with NULL, don't decrement
-    // num_carimbos--; // REMOVE THIS LINE
     
     printf("Número total de carimbos: %d\n", num_carimbos);
 
@@ -136,7 +139,8 @@ Carimbo* get_Carimbos(char* caminho) {
         return NULL;
     }
 
-    Carimbo* carimbo_array = malloc(num_carimbos * sizeof(Carimbo));
+    Carimbos_Num* carimbo_array = malloc(num_carimbos * sizeof(Carimbos_Num));
+    carimbo_array->quantidade = num_carimbos;
     if (!carimbo_array) {
         printf("Erro ao alocar memória para carimbo_array\n");
         return NULL;
@@ -198,26 +202,132 @@ Carimbo* get_Carimbos(char* caminho) {
             // Se coluna >= dim[1], ignora caracteres extras na linha
         }
 
-        carimbo_array[c] = carimbo;
+        carimbo_array->carimbos[c] = carimbo;
         free(dim); // Libera apenas dim, NÃO libera desenho!
     }
 
     return carimbo_array;
 }
 
-int main(){
-    char caminho[128] = "/home/Lucas/Documentos/Codes/C/Trabalhos/Art-Star/carimbos";
-    printf(caminho);
-    Carimbo* carimbos = get_Carimbos(caminho);
-    for (int i = 0; i < 7; i++) {
-        printf("Carimbo %d: %s\n", i + 1, carimbos[i].nome);
-        printf("Dimensões: %d x %d\n", carimbos[i].ordem[0], carimbos[i].ordem[1]);
-        for (int j = 0; j < carimbos[i].ordem[0]; j++) {
-            for (int k = 0; k < carimbos[i].ordem[1]; k++) {
-                printf("%c", carimbos[i].desenho[j][k]);
+int get_numDir(char* caminhoRaiz){
+    DIR* dir = opendir(caminhoRaiz);
+    struct dirent* entrada;
+    int pastas = 0;
+
+    if (dir == NULL){
+        perror("Erro ao abrir o diretório\n");
+        return -1;
+    }
+
+    while ((entrada = readdir(dir)) != NULL){
+
+        if (strcmp(entrada->d_name, ".") == 0 || strcmp(entrada->d_name,"..") == 0)
+            continue;
+
+        char caminho_completo[1024];
+        snprintf(caminho_completo, sizeof(caminho_completo), "%s/%s", caminhoRaiz, entrada->d_name);
+
+        struct stat st;
+        if (stat(caminho_completo, &st) == 0 && S_ISDIR(st.st_mode))
+            pastas++;
+    }
+
+    closedir(dir);
+    return pastas;
+}
+
+
+
+
+ConjuntoCarimbos* carrega_Carimbos(int numPastas, char* caminho){
+    /*
+    1. Verificar quantidade de pastas dentro de um dado caminho de diretório
+    2. Acessar as pastas, salvando o nome da pasta dentro do campo de nome de coleção de carimbos
+    3. get_Carimbos para cada pasta dento do dado diretório raiz
+    4. Retornar o conjunto de carimbos
+    */
+
+    ConjuntoCarimbos* pastas_Carimbos = (ConjuntoCarimbos*)malloc(numPastas * sizeof(ConjuntoCarimbos));
+    if (pastas_Carimbos == NULL) {
+        perror("Erro ao alocar memória para pastas_Carimbos");
+        return NULL;
+    }
+
+    DIR* dir = opendir(caminho);
+    struct dirent* entrada;
+    int index = 0;
+
+    while ((entrada = readdir(dir)) != NULL){
+
+        if (strcmp(entrada->d_name, ".") == 0 || strcmp(entrada->d_name,"..") == 0)
+            continue;
+
+        char caminho_completo[1024];
+        snprintf(caminho_completo, sizeof(caminho_completo), "%s/%s", caminho, entrada->d_name);
+
+        struct stat st;
+        if (stat(caminho_completo, &st) == 0 && S_ISDIR(st.st_mode)){
+            strncpy(pastas_Carimbos[index].nomePasta, entrada->d_name, sizeof(pastas_Carimbos[index].nomePasta) - 1);
+            pastas_Carimbos[index].nomePasta[sizeof(pastas_Carimbos[index].nomePasta) - 1] = '\0';
+
+        
+
+            Carimbos_Num* aux = get_Carimbos(caminho_completo);
+            pastas_Carimbos[index].carimbos = aux->carimbos;
+            pastas_Carimbos[index].quantidade = aux->quantidade;
+            free(aux);
+
+            for (int i = 0; i <= pastas_Carimbos[index].quantidade; i++) {
+                printf("Carimbo encontrado: %s\n", pastas_Carimbos[index].carimbos[i].nome);
             }
-            printf("\n");
         }
     }
+    return pastas_Carimbos;
+}
+
+int main(){
+
+    int numPastas = get_numDir(CAMINHO);
+    if (numPastas <= 0) {
+        return 1;
+    }
+
+    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
+    if (carimbos == NULL) {
+        fprintf(stderr, "Erro ao carregar carimbos\n");
+        return 1;
+    }
+
+    // Imprime os dados presentes em 'carimbos'
+    for (int i = 0; i < numPastas; i++) {
+        if (!carimbos[i].carimbos || carimbos[i].quantidade <= 0) {
+            continue;
+        }
+
+        printf("Pasta: %s\n", carimbos[i].nomePasta);
+        printf("Quantidade de carimbos: %d\n", carimbos[i].quantidade);
+
+
+        for (int j = 0; j < carimbos[i].quantidade; j++) {
+            Carimbo* c = &carimbos[i].carimbos[j];
+            printf("  Carimbo %d: %s (%dx%d)\n", j + 1, c->nome, c->ordem[0], c->ordem[1]);
+
+            if (c->desenho) {
+                for (int r = 0; r < c->ordem[0]; r++) {
+                    if (c->desenho[r]) {
+                        printf("    %s\n", c->desenho[r]);
+                    }
+                }
+            }
+        }
+        printf("\n");
+    }
+
+    // Libera a memória alocada
+    for (int i = 0; i < numPastas; i++) {
+        free(carimbos[i].carimbos);
+    }
     free(carimbos);
+
+    return 0;
 }
