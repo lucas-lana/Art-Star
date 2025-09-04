@@ -108,9 +108,9 @@ void Imprime_Desenho(int escolha){
                 tela_estrela[i] = (celula*)malloc(3*sizeof(celula));
             }
 
-            Quadro_Branco_Individual(tela_estrela,3,3);
+            Quadro_Branco(tela_estrela,3,3);
             Carimbo_Estrela_Inspec(tela_estrela,1,1);
-            Imprimir_Quadro_Individual(tela_estrela,3,3);
+            Imprimir_Quadro(tela_estrela,3,3);
             
             for (int i = 0; i < 3; i++){
                 free(tela_estrela[i]);
@@ -126,9 +126,9 @@ void Imprime_Desenho(int escolha){
                 tela_x[i] = (celula*)malloc(5*sizeof(celula));
             }
 
-            Quadro_Branco_Individual(tela_x,5,5);
+            Quadro_Branco(tela_x,5,5);
             Carimbo_X_Inspec(tela_x,1,1);
-            Imprimir_Quadro_Individual(tela_x,5,5);
+            Imprimir_Quadro(tela_x,5,5);
 
             for (int i = 0; i < 5; i++){
                 free(tela_x[i]);
@@ -144,9 +144,9 @@ void Imprime_Desenho(int escolha){
                 tela_soma[i] = (celula*)malloc(5*sizeof(celula));
             }
 
-            Quadro_Branco_Individual(tela_soma,5,5);
+            Quadro_Branco(tela_soma,5,5);
             Carimbo_Soma_Inspec(tela_soma,1,1);
-            Imprimir_Quadro_Individual(tela_soma,5,5);
+            Imprimir_Quadro(tela_soma,5,5);
 
             for (int i = 0; i < 5; i++){
                 free(tela_soma[i]);
@@ -161,9 +161,9 @@ void Imprime_Desenho(int escolha){
                 tela_star_destroyer[i] = (celula*)malloc(12*sizeof(celula));
             }
 
-            Quadro_Branco_Individual(tela_star_destroyer,8,12);
+            Quadro_Branco(tela_star_destroyer,8,12);
             Carimbo_StarDestroyer_Inspec(tela_star_destroyer,1,1);
-            Imprimir_Quadro_Individual(tela_star_destroyer,8,12);
+            Imprimir_Quadro(tela_star_destroyer,8,12);
 
             for (int i = 0; i < 7; i++){
                 free(tela_star_destroyer[i]);
@@ -177,9 +177,9 @@ void Imprime_Desenho(int escolha){
             for (int i = 0; i < 11; i++){
                 tela_fighter[i] = (celula*)malloc(15*sizeof(celula));
             }
-            Quadro_Branco_Individual(tela_fighter,11,15);
+            Quadro_Branco(tela_fighter,11,15);
             Carimbo_Fighter_Inspec(tela_fighter,1,1);
-            Imprimir_Quadro_Individual(tela_fighter,11,15);
+            Imprimir_Quadro(tela_fighter,11,15);
             
             for (int i = 0; i < 11; i++){
                 free(tela_fighter[i]);
@@ -193,9 +193,9 @@ void Imprime_Desenho(int escolha){
             for (int i = 0; i < 11; i++){
                 tela_interceptor[i] = (celula*)malloc(13*sizeof(celula));
             }
-            Quadro_Branco_Individual(tela_interceptor,11,13);
+            Quadro_Branco(tela_interceptor,11,13);
             Carimbo_Interceptor_Inspec(tela_interceptor,1,1);
-            Imprimir_Quadro_Individual(tela_interceptor,11,13);
+            Imprimir_Quadro(tela_interceptor,11,13);
 
             for (int i = 0; i < 11; i++){
                 free(tela_interceptor[i]);
@@ -209,9 +209,9 @@ void Imprime_Desenho(int escolha){
             for (int i = 0; i < 11; i++){
                 tela_ywing[i] = (celula*)malloc(13*sizeof(celula));
             }
-            Quadro_Branco_Individual(tela_ywing,11,13);
+            Quadro_Branco(tela_ywing,11,13);
             Carimbo_YWing_Inspec(tela_ywing,1,1);
-            Imprimir_Quadro_Individual(tela_ywing,11,13);
+            Imprimir_Quadro(tela_ywing,11,13);
 
             for (int i = 0; i < 11; i++){
                 free(tela_ywing[i]);
@@ -225,9 +225,9 @@ void Imprime_Desenho(int escolha){
             for (int i = 0; i < 10; i++){
                 tela_awing[i] = (celula*)malloc(13*sizeof(celula));
             }
-            Quadro_Branco_Individual(tela_awing,10,13);
+            Quadro_Branco(tela_awing,10,13);
             Carimbo_AWing_Inspec(tela_awing,1,1);
-            Imprimir_Quadro_Individual(tela_awing,10,13);
+            Imprimir_Quadro(tela_awing,10,13);
 
             for (int i = 0; i < 10; i++){
                 free(tela_awing[i]);
@@ -241,9 +241,9 @@ void Imprime_Desenho(int escolha){
             for (int i = 0; i < 8; i++){
                 tela_n1[i] = (celula*)malloc(11*sizeof(celula));
             }
-            Quadro_Branco_Individual(tela_n1,8,11);
+            Quadro_Branco(tela_n1,8,11);
             Carimbo_N1_Inspec(tela_n1,1,1);
-            Imprimir_Quadro_Individual(tela_n1,8,11);
+            Imprimir_Quadro(tela_n1,8,11);
 
             for (int i = 0; i < 8; i++){
                 free(tela_n1[i]);
@@ -257,9 +257,9 @@ void Imprime_Desenho(int escolha){
             for (int i = 0; i < 11; i++){
                 tela_xwing[i] = (celula*)malloc(15*sizeof(celula));
             }
-            Quadro_Branco_Individual(tela_xwing,11,15);
+            Quadro_Branco(tela_xwing,11,15);
             Carimbo_XWing_Inspec(tela_xwing,1,1);
-            Imprimir_Quadro_Individual(tela_xwing,11,15);
+            Imprimir_Quadro(tela_xwing,11,15);
 
             for (int i = 0; i < 11; i++){
                 free(tela_xwing[i]);
@@ -381,7 +381,7 @@ bool Menu_Reinicio(){
     return retorno;
 }
 
-void Menu_Salvar(celula tela[LINHAS][COLUNAS],int seed,int hits, int formas, int naves){
+void Menu_Salvar(celula** tela,int linhas,int colunas,int seed,int hits, int formas, int naves){
     FILE *arquivo;
     char nome[64];
     printf("=================================\n");
@@ -399,8 +399,8 @@ void Menu_Salvar(celula tela[LINHAS][COLUNAS],int seed,int hits, int formas, int
         fprintf(arquivo,"Quantidade de figuras: %d\n\n",formas);
     }
 
-    for (int i = 0; i < LINHAS; i++){
-        for (int j = 0; j < COLUNAS; j++){
+    for (int i = 0; i < linhas; i++){
+        for (int j = 0; j < colunas; j++){
             fprintf(arquivo,"%c",tela[i][j].simbolo);
         }
         fprintf(arquivo,"\n");
@@ -408,7 +408,7 @@ void Menu_Salvar(celula tela[LINHAS][COLUNAS],int seed,int hits, int formas, int
     fclose(arquivo);
 }
 
-int* Menu_Carregar(celula tela[LINHAS][COLUNAS]) {
+int* Menu_Carregar(celula** tela,int linhas,int colunas){ 
     FILE *arquivo;
     char nome[64];
     int *p = malloc(4 * sizeof(int));
@@ -448,9 +448,9 @@ int* Menu_Carregar(celula tela[LINHAS][COLUNAS]) {
 
 
     // Lendo a grade de símbolos
-    for (int i = 0; i < LINHAS; i++) {
+    for (int i = 0; i < linhas; i++) {
         fgets(linha, sizeof(linha), arquivo);  // Lê a linha da tela
-        for (int j = 0; j < COLUNAS; j++) {
+        for (int j = 0; j < colunas; j++) {
             tela[i][j].simbolo = linha[j];
         }
     }
@@ -460,7 +460,7 @@ int* Menu_Carregar(celula tela[LINHAS][COLUNAS]) {
 }
 
 
-void Menu_Arquivo(celula tela[LINHAS][COLUNAS],int seed,int hits, int formas, int naves){
+void Menu_Arquivo(celula** tela,int linhas,int colunas,int seed,int hits, int formas, int naves){
     int escolha;
     while (1){
         printf("=================================\n");
@@ -468,7 +468,7 @@ void Menu_Arquivo(celula tela[LINHAS][COLUNAS],int seed,int hits, int formas, in
         printf("Escolha: ");
         scanf("%d",&escolha);
         if (escolha == 1){
-            Menu_Salvar(tela,seed,hits,formas,naves);
+            Menu_Salvar(tela,linhas,colunas,seed,hits,formas,naves);
             break;
         }
         else if (escolha == 2){

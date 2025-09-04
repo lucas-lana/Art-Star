@@ -1,6 +1,6 @@
 #include "carimbos.c"
 
-bool Verificar_Espaço_StarDestroyer(celula tela[LINHAS][COLUNAS],int i, int j){
+bool Verificar_Espaço_StarDestroyer(celula **tela,int i, int j){
     for (int k = 0; k < 9; k++){
         for (int l = 0; l < 12; l++){
             if (tela[i+k][j+l].preenchido == true){
@@ -11,7 +11,7 @@ bool Verificar_Espaço_StarDestroyer(celula tela[LINHAS][COLUNAS],int i, int j){
     return true;
 }
 
-void Carimbo_StarDestroyer(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_StarDestroyer(celula **tela, int i, int j){
 
     tela[i+1][j+5].simbolo = '*'; tela[i+1][j+6].simbolo = '*';
     tela[i+2][j+4].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*';
@@ -28,7 +28,7 @@ void Carimbo_StarDestroyer(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-void Carimbo_StarDestroyer_Negativo(celula tela[LINHAS][COLUNAS],int i, int j){
+void Carimbo_StarDestroyer_Negativo(celula **tela,int i, int j){
 
     tela[i+1][j+5].simbolo = '*'; tela[i+1][j+6].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+3].simbolo = '*'; tela[i+2][j+4].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*'; tela[i+2][j+8].simbolo = '*'; tela[i+2][j+9].simbolo = '*'; tela[i+2][j+10].simbolo = '*';
@@ -45,7 +45,7 @@ void Carimbo_StarDestroyer_Negativo(celula tela[LINHAS][COLUNAS],int i, int j){
     }
 }
 
-bool Verificar_Espaço_9x13(celula tela[LINHAS][COLUNAS],int i, int j){
+bool Verificar_Espaço_9x13(celula **tela,int i, int j){
     for (int k = 0; k <11; k++){
         for (int l = 0; l < 15; l++){
             if (tela[i+k][j+l].preenchido == true){
@@ -56,7 +56,7 @@ bool Verificar_Espaço_9x13(celula tela[LINHAS][COLUNAS],int i, int j){
     return true;
 }
 
-void Carimbo_Fighter(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_Fighter(celula **tela, int i, int j){
 
     tela[i+1][j+1].simbolo = '*'; tela[i+1][j+13].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+13].simbolo = '*';
@@ -76,7 +76,7 @@ void Carimbo_Fighter(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-void Carimbo_Fighter_Negativo(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_Fighter_Negativo(celula **tela, int i, int j){
 
     tela[i+1][j+1].simbolo = '*'; tela[i+1][j+2].simbolo = '*'; tela[i+1][j+3].simbolo = '*'; tela[i+1][j+11].simbolo = '*'; tela[i+1][j+12].simbolo = '*'; tela[i+1][j+13].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+12].simbolo = '*'; tela[i+2][j+13].simbolo = '*';
@@ -100,7 +100,7 @@ void Carimbo_Fighter_Negativo(celula tela[LINHAS][COLUNAS], int i, int j){
 
 // A-Wing
 
-bool Verificar_Espaço_AWing(celula tela[LINHAS][COLUNAS],int i, int j){
+bool Verificar_Espaço_AWing(celula **tela,int i, int j){
     for (int k = 0; k < 10; k++){
         for (int l = 0; l < 13; l++){
             if (tela[i+k][j+l].preenchido == true){
@@ -111,7 +111,7 @@ bool Verificar_Espaço_AWing(celula tela[LINHAS][COLUNAS],int i, int j){
     return true;
 }
 
-void Carimbo_AWing(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_AWing(celula **tela, int i, int j){
 
     tela[i+1][j+6].simbolo = '*';
     tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*';
@@ -130,7 +130,7 @@ void Carimbo_AWing(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-void Carimbo_AWing_Negativo(celula tela[LINHAS][COLUNAS],int i,int j){
+void Carimbo_AWing_Negativo(celula **tela,int i,int j){
 
     tela[i+1][j+2].simbolo = '*'; tela[i+1][j+6].simbolo = '*'; tela[i+1][j+10].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+3].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*'; tela[i+2][j+9].simbolo = '*'; tela[i+2][j+10].simbolo = '*'; tela[i+2][j+11].simbolo = '*';
@@ -151,7 +151,7 @@ void Carimbo_AWing_Negativo(celula tela[LINHAS][COLUNAS],int i,int j){
 
 // Interceptor
 
-bool Verificar_Espaço_9x11(celula tela[LINHAS][COLUNAS],int i, int j){
+bool Verificar_Espaço_9x11(celula **tela,int i, int j){
     for (int k = 0; k < 11; k++){
         for (int l = 0; l < 13; l++){
             if (tela[i+k][j+l].preenchido == true){
@@ -162,7 +162,7 @@ bool Verificar_Espaço_9x11(celula tela[LINHAS][COLUNAS],int i, int j){
     return true;
 }
 
-void Carimbo_Interceptor(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_Interceptor(celula **tela, int i, int j){
 
     tela[i+1][j+1].simbolo = '*'; tela[i+1][j+11].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+10].simbolo = '*'; tela[i+2][j+11].simbolo = '*';
@@ -183,7 +183,7 @@ void Carimbo_Interceptor(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-void Carimbo_Interceptor_Negativo(celula tela[LINHAS][COLUNAS],int i,int j){
+void Carimbo_Interceptor_Negativo(celula **tela,int i,int j){
 
     tela[i+1][j+5].simbolo = '*'; tela[i+1][j+6].simbolo = '*'; tela[i+1][j+7].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+4].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*'; tela[i+2][j+8].simbolo = '*'; tela[i+2][j+10].simbolo = '*'; tela[i+2][j+11].simbolo = '*';
@@ -205,7 +205,7 @@ void Carimbo_Interceptor_Negativo(celula tela[LINHAS][COLUNAS],int i,int j){
 
 // Y-Wing
 
-void Carimbo_YWing(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_YWing(celula **tela, int i, int j){
 
     tela[i+1][j+6].simbolo = '*';
     tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*';
@@ -225,7 +225,7 @@ void Carimbo_YWing(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-void Carimbo_YWing_Negativo(celula tela[LINHAS][COLUNAS],int i, int j){
+void Carimbo_YWing_Negativo(celula **tela,int i, int j){
 
     tela[i+1][j+1].simbolo = '*'; tela[i+1][j+2].simbolo = '*'; tela[i+1][j+10].simbolo = '*'; tela[i+1][j+11].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+3].simbolo = '*'; tela[i+2][j+9].simbolo = '*'; tela[i+2][j+10].simbolo = '*'; tela[i+2][j+11].simbolo = '*';
@@ -247,7 +247,7 @@ void Carimbo_YWing_Negativo(celula tela[LINHAS][COLUNAS],int i, int j){
 
 //Star Fighter N1
 
-bool Verificar_Espaço_N1(celula tela[LINHAS][COLUNAS],int i, int j){
+bool Verificar_Espaço_N1(celula **tela,int i, int j){
     for (int k = 0; k < 8; k++){
         for (int l = 0; l < 11; l++){
             if (tela[i+k][j+l].preenchido == true){
@@ -258,7 +258,7 @@ bool Verificar_Espaço_N1(celula tela[LINHAS][COLUNAS],int i, int j){
     return true;
 }
 
-void Carimbo_N1(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_N1(celula **tela, int i, int j){
 
     tela[i+1][j+5].simbolo = '*';
     tela[i+2][j+4].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*';
@@ -275,7 +275,7 @@ void Carimbo_N1(celula tela[LINHAS][COLUNAS], int i, int j){
     }   
 }
 
-void Carimbo_N1_Negativo(celula tela[LINHAS][COLUNAS],int i,int j){
+void Carimbo_N1_Negativo(celula **tela,int i,int j){
 
     tela[i+1][j+1].simbolo = '*'; tela[i+1][j+5].simbolo = '*'; tela[i+1][j+9].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+4].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+8].simbolo = '*'; tela[i+2][j+9].simbolo = '*';
@@ -293,8 +293,8 @@ void Carimbo_N1_Negativo(celula tela[LINHAS][COLUNAS],int i,int j){
 
 //X-Wing
 
-void Carimbo_XWing(celula tela[LINHAS][COLUNAS], int i, int j){
-    
+void Carimbo_XWing(celula **tela, int i, int j){
+
     tela[i+1][j+1].simbolo = '*'; tela[i+1][j+2].simbolo = '*'; tela[i+1][j+12].simbolo = '*'; tela[i+1][j+13].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+12].simbolo = '*'; tela[i+2][j+13].simbolo = '*'; 
     tela[i+3][j+1].simbolo = '*'; tela[i+3][j+2].simbolo = '*'; tela[i+3][j+7].simbolo = '*'; tela[i+3][j+12].simbolo = '*'; tela[i+3][j+13].simbolo = '*';
@@ -313,9 +313,9 @@ void Carimbo_XWing(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-void Carimbo_XWing_Negativo(celula tela[LINHAS][COLUNAS], int i, int j){
-    
-    tela[i+1][j+6].simbolo = '*'; tela[i+1][j+7].simbolo = '*'; tela[i+1][j+8].simbolo = '*'; 
+void Carimbo_XWing_Negativo(celula **tela, int i, int j){
+
+    tela[i+1][j+6].simbolo = '*'; tela[i+1][j+7].simbolo = '*'; tela[i+1][j+8].simbolo = '*';
     tela[i+2][j+1].simbolo = '*'; tela[i+2][j+2].simbolo = '*'; tela[i+2][j+3].simbolo = '*'; tela[i+2][j+4].simbolo = '*'; tela[i+2][j+5].simbolo = '*'; tela[i+2][j+6].simbolo = '*'; tela[i+2][j+7].simbolo = '*'; tela[i+2][j+8].simbolo = '*'; tela[i+2][j+9].simbolo = '*'; tela[i+2][j+10].simbolo = '*'; tela[i+2][j+11].simbolo = '*'; tela[i+2][j+12].simbolo = '*'; tela[i+2][j+13].simbolo = '*';
     tela[i+3][j+1].simbolo = '*'; tela[i+3][j+2].simbolo = '*'; tela[i+3][j+5].simbolo = '*'; tela[i+3][j+6].simbolo = '*'; tela[i+3][j+7].simbolo = '*'; tela[i+3][j+8].simbolo = '*'; tela[i+3][j+9].simbolo = '*'; tela[i+3][j+12].simbolo = '*'; tela[i+3][j+13].simbolo = '*';
     tela[i+4][j+1].simbolo = '*'; tela[i+4][j+2].simbolo = '*'; tela[i+4][j+6].simbolo = '*'; tela[i+4][j+7].simbolo = '*'; tela[i+4][j+8].simbolo = '*'; tela[i+4][j+12].simbolo = '*'; tela[i+4][j+13].simbolo = '*';
@@ -333,7 +333,7 @@ void Carimbo_XWing_Negativo(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-bool Carimbar_Nave(celula tela [LINHAS][COLUNAS],int nave,int x, int y,int index){
+bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
     bool carimbado = false;
     int direcao = index %2;
         switch (nave){

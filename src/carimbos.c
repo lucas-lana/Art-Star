@@ -9,20 +9,23 @@
 #define COLUNAS 80
 
 
-void Carimbo_Estrela(celula tela[LINHAS][COLUNAS], int i, int j){
+void Carimbo_Estrela(celula **tela, int i, int j){
     tela[i][j].simbolo = '*';
     tela[i][j].preenchido = true;
 }
 
-bool Verificar_Espaço(celula tela[LINHAS][COLUNAS],int i, int j){
+bool Verificar_Espaço(celula **tela,int linhas, int colunas,int i, int j){
+    if (i < 0 || j < 0 || i + 2 >= linhas || j + 2 >= colunas) {
+        return false; // Fora dos limites da tela
+    }
     bool linha1 = (tela[i][j].preenchido == false && tela[i][j+1].preenchido == false && tela[i][j+2].preenchido == false);
     bool linha2 = (tela[i+1][j].preenchido == false && tela[i+1][j+1].preenchido == false && tela[i+1][j+2].preenchido == false);
     bool linha3 = (tela[i+2][j].preenchido == false && tela[i+2][j+1].preenchido == false && tela[i+2][j+2].preenchido == false);
     return linha1 && linha2 && linha3;
 }
 
-void Carimbo_Soma(celula tela[LINHAS][COLUNAS], int i, int j){
-    
+void Carimbo_Soma(celula **tela, int i, int j){
+
     tela[i][j+1].simbolo = '*';
     tela[i+1][j].simbolo = '*';
     tela[i+1][j+1].simbolo = '*';
@@ -37,10 +40,10 @@ void Carimbo_Soma(celula tela[LINHAS][COLUNAS], int i, int j){
     
 }
 
-void Carimbo_X(celula tela[LINHAS][COLUNAS], int i, int j){
-    
-    tela[i][j].simbolo = '*';    
-    tela[i][j+2].simbolo = '*';  
+void Carimbo_X(celula **tela, int i, int j){
+
+    tela[i][j].simbolo = '*';
+    tela[i][j+2].simbolo = '*';
     tela[i+1][j+1].simbolo = '*';
     tela[i+2][j].simbolo = '*';
     tela[i+2][j+2].simbolo = '*';
@@ -52,7 +55,7 @@ void Carimbo_X(celula tela[LINHAS][COLUNAS], int i, int j){
     }
 }
 
-bool Carimbo_Aleatorio(celula tela[LINHAS][COLUNAS], int i, int j,int tipo){
+bool Carimbo_Aleatorio(celula **tela,int linhas,int colunas, int i, int j,int tipo){
     bool carimbado;
     switch (tipo){
         case 0:
@@ -62,13 +65,13 @@ bool Carimbo_Aleatorio(celula tela[LINHAS][COLUNAS], int i, int j,int tipo){
             }
             break;
         case 1:
-            if (Verificar_Espaço(tela,i,j)){
+            if (Verificar_Espaço(tela,linhas,colunas,i,j)){
                 Carimbo_Soma(tela,i,j);
                 carimbado = true;
             }
             break;
         case 2:
-            if (Verificar_Espaço(tela,i,j)) {
+            if (Verificar_Espaço(tela,linhas,colunas,i,j)) {
                 Carimbo_X(tela,i,j);
                 carimbado = true;
             }
@@ -92,9 +95,14 @@ char** inverte_carimbo(char** carimbo,int linhas,int colunas) {
     return invertido;
 }
 
-bool verificar_Espaco(celula** tela, int ref_i, int ref_j, int linhas_carimbo, int colunas_carimbo) {
+bool verificar_Espaco(celula** tela,int linhas, int colunas, int ref_i, int ref_j, int linhas_carimbo, int colunas_carimbo) {
     for (int i = 0; i < linhas_carimbo; i++) {
-        for ( int j = 0; i < colunas_carimbo; j++) {
+        for ( int j = 0; j < colunas_carimbo; j++) {
+
+            if (ref_i + i < 0 || ref_j + j < 0 || ref_i + i >= linhas || ref_j + j >= colunas) {
+                return false; // Fora dos limites da tela
+            }
+
             if (tela [ref_i + i][ref_j + j].preenchido == true) {
                 return false;
             }
