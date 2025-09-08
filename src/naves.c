@@ -1,16 +1,5 @@
 #include "carimbos.c"
 
-bool Verificar_Espaço_StarDestroyer(celula **tela,int i, int j){
-    for (int k = 0; k < 9; k++){
-        for (int l = 0; l < 12; l++){
-            if (tela[i+k][j+l].preenchido == true){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 void Carimbo_StarDestroyer(celula **tela, int i, int j){
 
     tela[i+1][j+5].simbolo = '*'; tela[i+1][j+6].simbolo = '*';
@@ -43,17 +32,6 @@ void Carimbo_StarDestroyer_Negativo(celula **tela,int i, int j){
             tela[i+k][j+l].preenchido = true;
         }
     }
-}
-
-bool Verificar_Espaço_9x13(celula **tela,int i, int j){
-    for (int k = 0; k <11; k++){
-        for (int l = 0; l < 15; l++){
-            if (tela[i+k][j+l].preenchido == true){
-                return false;
-            }
-        }
-    }
-    return true;
 }
 
 void Carimbo_Fighter(celula **tela, int i, int j){
@@ -100,17 +78,6 @@ void Carimbo_Fighter_Negativo(celula **tela, int i, int j){
 
 // A-Wing
 
-bool Verificar_Espaço_AWing(celula **tela,int i, int j){
-    for (int k = 0; k < 10; k++){
-        for (int l = 0; l < 13; l++){
-            if (tela[i+k][j+l].preenchido == true){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 void Carimbo_AWing(celula **tela, int i, int j){
 
     tela[i+1][j+6].simbolo = '*';
@@ -150,17 +117,6 @@ void Carimbo_AWing_Negativo(celula **tela,int i,int j){
 }
 
 // Interceptor
-
-bool Verificar_Espaço_9x11(celula **tela,int i, int j){
-    for (int k = 0; k < 11; k++){
-        for (int l = 0; l < 13; l++){
-            if (tela[i+k][j+l].preenchido == true){
-                return false;
-            }
-        }
-    }
-    return true;
-}
 
 void Carimbo_Interceptor(celula **tela, int i, int j){
 
@@ -247,17 +203,6 @@ void Carimbo_YWing_Negativo(celula **tela,int i, int j){
 
 //Star Fighter N1
 
-bool Verificar_Espaço_N1(celula **tela,int i, int j){
-    for (int k = 0; k < 8; k++){
-        for (int l = 0; l < 11; l++){
-            if (tela[i+k][j+l].preenchido == true){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 void Carimbo_N1(celula **tela, int i, int j){
 
     tela[i+1][j+5].simbolo = '*';
@@ -338,7 +283,7 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
     int direcao = index %2;
         switch (nave){
         case 0:
-            if (Verificar_Espaço_StarDestroyer(tela,x,y)){
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,9,12)){
                 if(direcao == 0){
                     Carimbo_StarDestroyer(tela,x,y);
                 }
@@ -350,7 +295,7 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
             break;
         
         case 1:
-            if (Verificar_Espaço_9x13(tela,x,y)){
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,9,13)){
                 if(direcao == 0){
                     Carimbo_Fighter(tela,x,y);
                 }
@@ -362,7 +307,7 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
         break;
 
         case 2:
-            if (Verificar_Espaço_AWing(tela,x,y)){
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,10,13)){
                 if(direcao == 0){
                     Carimbo_AWing(tela,x,y);
                 }
@@ -374,7 +319,7 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
         break;
 
         case 3:
-            if (Verificar_Espaço_9x11(tela,x,y)){
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,9,11)){
                 if(direcao == 0){
                     Carimbo_Interceptor(tela,x,y);
                 }
@@ -386,7 +331,7 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
         break;
 
         case 4:
-            if (Verificar_Espaço_9x11(tela,x,y)){
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,9,11)){
                 if(direcao == 0){
                     Carimbo_YWing(tela,x,y);
                 }
@@ -398,7 +343,8 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
         break;
 
         case 5:
-            if (Verificar_Espaço_N1(tela,x,y)){
+            //8x11
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,8,11)){
                 if(direcao == 0){
                     Carimbo_N1(tela,x,y);
                 }
@@ -410,7 +356,7 @@ bool Carimbar_Nave(celula** tela,int nave,int x, int y,int index){
         break;
 
         case 6:
-            if (Verificar_Espaço_9x13(tela,x,y)){
+            if (verificar_Espaco(tela,LINHAS,COLUNAS,x,y,9,13)){
                 if(direcao == 0){
                     Carimbo_XWing(tela,x,y);
                 }

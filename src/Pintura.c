@@ -1,14 +1,5 @@
 #include "naves.c"
 
-/*  
-Testar adicionar mais uma troca de equação
-
-Testar modificar a forma de alteração de equação
-
-*/
-
-
-
 void Quadro_Branco( celula **tela, int linhas, int colunas){
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
@@ -104,18 +95,16 @@ int Get_Coordenada(int seed,int i,int old_coordenada,bool tipo,int equacao){ // 
 long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,int carimbadas,int equacao,int index){
     long int guarda = 0;
     int loop = 0;
-    int limear = pow(2,((sizeof(int)*6)));
+    int limear = pow(2,((sizeof(int)*5)));
     int x,y,old_x,old_y;
     int reset = 0;
 
     while (loop < carimbadas){
 
         if (index >= limear && reset < 2 && carimbo == 5){ 
-            //Reinicia tudo
+            
             guarda += index;
             index = 1;
-            loop = 0;
-            Quadro_Branco(tela,linhas,colunas);
 
             if (reset == 0){
                 equacao = 4;
@@ -128,7 +117,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
             }
         }
         else if (reset >= 2){
-            return -1;
+            return (guarda + index) - carimbadas;
         }
         
         if (!((old_x == 0 || old_y == 0) || (old_x == LINHAS || old_y == COLUNAS))){
