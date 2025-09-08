@@ -1,5 +1,14 @@
 #include "naves.c"
 
+/*  
+Testar adicionar mais uma troca de equação
+
+Testar modificar a forma de alteração de equação
+
+*/
+
+
+
 void Quadro_Branco( celula **tela, int linhas, int colunas){
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
@@ -51,17 +60,6 @@ int Get_Coordenada(int seed,int i,int old_coordenada,bool tipo,int equacao){ // 
             default:
                 break;
             }
-                    
-            //coordenada = ((old_coordenada*i) + seed + i)%20; // Formula quase boa, funciona sempre, mas muitas repetições, bem aleatório
-
-            /*Formula menos ruim(Execente em termos de poucas vezes repetidas, até n)
-            N dependendo da forma, se for uma forma maior, n = 15, se for uma forma menor, n = 50*/
-            //coordenada = (old_coordenada + seed + i)%20;
-
-            //coordenada = ((old_coordenada*i)+seed)%20;// Fórmula mais ou menos
-            
-            //coordenada = (old_coordenada + seed)%20;// Fórmula ruim
-            //coordenada = (old_coordenada+(seed/20))%20;// Fórmula horrível
     }
 
     else{ // Coordenada Y
@@ -93,17 +91,6 @@ int Get_Coordenada(int seed,int i,int old_coordenada,bool tipo,int equacao){ // 
             default:
                 break;
             }
-            
-            //coordenada = ((old_coordenada*i) + seed + i)%80; // Formula quase boa, funciona sempre, mas muitas repetições, bem aleatório
-
-            /*Formula menos ruim(Execente em termos de poucas vezes repetidas, até n)
-            N dependendo da forma, se for uma forma maior, n = 15, se for uma forma menor, n = 50*/
-            //coordenada = (old_coordenada + seed + i)%80;
-
-            //coordenada = ((old_coordenada*i)+seed)%80;// Fórmula mais ou menos
-            
-            //coordenada = (old_coordenada + seed)%80;// Fórmula ruim
-            //coordenada = (old_coordenada+(seed/80))%80; // Fórmula horrível
     }
     if (coordenada < 0){
         coordenada = coordenada * -1;
@@ -119,6 +106,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
     int loop = 0;
     int limear = pow(2,((sizeof(int)*6)));
     int x,y,old_x,old_y;
+    int nave;
 
     while (loop < carimbadas){
 
@@ -211,7 +199,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                 break;
 
                 case 5:
-                    int nave = (seed + index) % 7;
+                    nave = (seed + index) % 6;
                     bool carimbado_Nave = Carimbar_Nave(tela,nave,x,y,index);
                     if (carimbado_Nave){
                         old_x = x;

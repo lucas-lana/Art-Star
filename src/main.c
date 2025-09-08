@@ -27,8 +27,8 @@ int main(){
                 seed = Menu_Seed();
                 estrelas = Menu_Quantidade_Estrelas();
                 naves = Menu_Quantidade_Naves();
-                long int conflito_estrelas = Carimbar(tela,LINHAS,COLUNAS,seed,1,estrelas,1,0);
                 long int conflito_naves = Carimbar(tela,LINHAS,COLUNAS,seed,5,naves,1,0);
+                long int conflito_estrelas = Carimbar(tela,LINHAS,COLUNAS,seed,1,estrelas,1,0);
                 rep = conflito_estrelas + conflito_naves;
                 if (rep > pow(2,((sizeof(int)*6)))){
                     rep = Carimbar(tela,LINHAS,COLUNAS,seed,1,estrelas,1,0);

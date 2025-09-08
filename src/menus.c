@@ -54,17 +54,17 @@ int Menu_Quantidade_Estrelas(){
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Digite a quantidade de estrelas 1 à 42 (menor ou igual a zero será aleatorio): ");
+        printf("Digite a quantidade de estrelas 1 à 100 (menor ou igual a zero será aleatorio): ");
         scanf("%d",&escolha);
         if (escolha <= 0){
-            escolha = rand() % 42;
+            escolha = rand() % 100;
             break;
         }
-        else if (escolha >= 42){
-            escolha = 42;
+        else if (escolha >= 100){
+            escolha = 100;
             break;
         }
-        else if (escolha > 0 && escolha < 42){
+        else if (escolha > 0 && escolha < 100){
             break;
         }
         else {
@@ -78,17 +78,13 @@ int Menu_Quantidade_Naves(){
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Digite a quantidade de naves 1 à 7 (menor ou igual a zero será aleatorio): ");
+        printf("Digite a quantidade de naves 1 à 6 (menor ou igual a zero será aleatorio): ");
         scanf("%d",&escolha);
-        if (escolha <= 0){
-            escolha = rand() % 7;
+        if (escolha <= 0 || escolha > 6){
+            escolha = rand() % 6;
             break;
         }
-        else if (escolha >= 7){
-            escolha = 7;
-            break;
-        }
-        else if (escolha > 0 && escolha < 7){
+        else if (escolha > 0 && escolha <= 6){
             break;
         }
         else {
