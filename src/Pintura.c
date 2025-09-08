@@ -106,16 +106,29 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
     int loop = 0;
     int limear = pow(2,((sizeof(int)*6)));
     int x,y,old_x,old_y;
-    int nave;
+    int reset = 0;
 
     while (loop < carimbadas){
 
-        if (index >= limear){
+        if (index >= limear && reset < 2 && carimbo == 5){ 
+            //Reinicia tudo
             guarda += index;
             index = 1;
             loop = 0;
             Quadro_Branco(tela,linhas,colunas);
-            equacao = 4;
+
+            if (reset == 0){
+                equacao = 4;
+                reset++;
+            }
+            
+            else {
+                equacao = 2;
+                reset++;
+            }
+        }
+        else if (reset >= 2){
+            return -1;
         }
         
         if (!((old_x == 0 || old_y == 0) || (old_x == LINHAS || old_y == COLUNAS))){
@@ -199,8 +212,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                 break;
 
                 case 5:
-                    nave = (seed + index) % 6;
-                    bool carimbado_Nave = Carimbar_Nave(tela,nave,x,y,index);
+                    bool carimbado_Nave = Carimbar_Nave(tela,((seed + index) % 6),x,y,index);
                     if (carimbado_Nave){
                         old_x = x;
                         old_y = y;

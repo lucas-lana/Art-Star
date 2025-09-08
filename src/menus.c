@@ -56,15 +56,11 @@ int Menu_Quantidade_Estrelas(){
         printf("=================================\n");
         printf("Digite a quantidade de estrelas 1 à 100 (menor ou igual a zero será aleatorio): ");
         scanf("%d",&escolha);
-        if (escolha <= 0){
+        if (escolha <= 0 && escolha > 100){
             escolha = rand() % 100;
             break;
         }
-        else if (escolha >= 100){
-            escolha = 100;
-            break;
-        }
-        else if (escolha > 0 && escolha < 100){
+        else if (escolha > 0 && escolha <= 100){
             break;
         }
         else {
