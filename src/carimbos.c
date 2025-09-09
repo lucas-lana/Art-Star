@@ -1,8 +1,7 @@
 #ifndef CARIMBOS_C
 #define CARIMBOS_C
 
-
-#include "celula.h"
+#include "carimbos.h"
 
 
 #define LINHAS 20
@@ -14,7 +13,7 @@ void Carimbo_Estrela(celula **tela, int i, int j){
     tela[i][j].preenchido = true;
 }
 
-bool Verificar_Espaço(celula **tela,int linhas, int colunas,int i, int j){
+bool Verificar_3x3(celula **tela, int i, int j, int linhas, int colunas){
     if (i < 0 || j < 0 || i + 2 >= linhas || j + 2 >= colunas) {
         return false; // Fora dos limites da tela
     }
@@ -65,13 +64,13 @@ bool Carimbo_Aleatorio(celula **tela,int linhas,int colunas, int i, int j,int ti
             }
             break;
         case 1:
-            if (Verificar_Espaço(tela,linhas,colunas,i,j)){
+            if (Verificar_3x3(tela,i,j,linhas,colunas)){
                 Carimbo_Soma(tela,i,j);
                 carimbado = true;
             }
             break;
         case 2:
-            if (Verificar_Espaço(tela,linhas,colunas,i,j)) {
+            if (Verificar_3x3(tela,i,j,linhas,colunas)) {
                 Carimbo_X(tela,i,j);
                 carimbado = true;
             }

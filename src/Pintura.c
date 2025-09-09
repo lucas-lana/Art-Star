@@ -1,6 +1,6 @@
 #include "naves.c"
 
-void Quadro_Branco( celula **tela, int linhas, int colunas){
+void Quadro_Branco(celula **tela, int linhas, int colunas){
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
             if (i == 0 || i == linhas - 1){
@@ -146,7 +146,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                 break;
 
                 case 2:
-                    if (Verificar_Espaço(tela,linhas,colunas,x,y)){
+                    if (Verificar_3x3(tela,x,y,linhas,colunas)){
                         Carimbo_Soma(tela,x,y);
                         old_x = x;
                         old_y = y;
@@ -164,7 +164,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                 break;
 
                 case 3:
-                    if (Verificar_Espaço(tela,linhas,colunas,x,y)){
+                    if (Verificar_3x3(tela,x,y,linhas,colunas)){
                         Carimbo_X(tela,x,y);
                         old_x = x;
                         old_y = y;

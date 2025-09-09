@@ -1,5 +1,5 @@
-#include "Inspec.c"
 #include "menus.h"
+#include "Pintura.c"
 
 int Menu_Seed(){
     int escolha;
@@ -90,182 +90,38 @@ int Menu_Quantidade_Naves(){
     return escolha;
 }
 
-void Imprime_Desenho(int escolha){
-    switch (escolha){
-        case 1:
-            printf("Estrela:\n");
+void Imprime_Desenho(Carimbo* desenho){
 
-            celula **tela_estrela = (celula**)malloc(3*sizeof(celula*));
-            for (int i = 0; i < 3; i++){
-                tela_estrela[i] = (celula*)malloc(3*sizeof(celula));
-            }
-
-            Quadro_Branco(tela_estrela,3,3);
-            Carimbo_Estrela_Inspec(tela_estrela,1,1);
-            Imprimir_Quadro(tela_estrela,3,3);
-            
-            for (int i = 0; i < 3; i++){
-                free(tela_estrela[i]);
-            }
-            free(tela_estrela);
-
-            break;
-        case 2:
-            printf("X:\n");
-            
-            celula **tela_x = (celula**)malloc(5*sizeof(celula*));
-            for (int i = 0; i < 5; i++){
-                tela_x[i] = (celula*)malloc(5*sizeof(celula));
-            }
-
-            Quadro_Branco(tela_x,5,5);
-            Carimbo_X_Inspec(tela_x,1,1);
-            Imprimir_Quadro(tela_x,5,5);
-
-            for (int i = 0; i < 5; i++){
-                free(tela_x[i]);
-            }
-            free(tela_x);
-
-            break;
-        case 3:
-            printf("Soma:\n");
-            
-            celula **tela_soma = (celula**)malloc(5*sizeof(celula*));
-            for (int i = 0; i < 5; i++){
-                tela_soma[i] = (celula*)malloc(5*sizeof(celula));
-            }
-
-            Quadro_Branco(tela_soma,5,5);
-            Carimbo_Soma_Inspec(tela_soma,1,1);
-            Imprimir_Quadro(tela_soma,5,5);
-
-            for (int i = 0; i < 5; i++){
-                free(tela_soma[i]);
-            }
-            free(tela_soma);
-
-            break;
-        case 4:
-            printf("Star Destroyer:\n");
-            celula **tela_star_destroyer = (celula**)malloc(8*sizeof(celula*));
-            for (int i = 0; i < 8; i++){
-                tela_star_destroyer[i] = (celula*)malloc(12*sizeof(celula));
-            }
-
-            Quadro_Branco(tela_star_destroyer,8,12);
-            Carimbo_StarDestroyer_Inspec(tela_star_destroyer,1,1);
-            Imprimir_Quadro(tela_star_destroyer,8,12);
-
-            for (int i = 0; i < 7; i++){
-                free(tela_star_destroyer[i]);
-            }
-            free(tela_star_destroyer);
-
-            break;
-        case 5:
-            printf("Fighter:\n");
-            celula **tela_fighter = (celula**)malloc(11*sizeof(celula*));
-            for (int i = 0; i < 11; i++){
-                tela_fighter[i] = (celula*)malloc(15*sizeof(celula));
-            }
-            Quadro_Branco(tela_fighter,11,15);
-            Carimbo_Fighter_Inspec(tela_fighter,1,1);
-            Imprimir_Quadro(tela_fighter,11,15);
-            
-            for (int i = 0; i < 11; i++){
-                free(tela_fighter[i]);
-            }
-            free(tela_fighter);
-
-            break;
-        case 6:
-            printf("Interceptor:\n");
-            celula **tela_interceptor = (celula**)malloc(11*sizeof(celula*));
-            for (int i = 0; i < 11; i++){
-                tela_interceptor[i] = (celula*)malloc(13*sizeof(celula));
-            }
-            Quadro_Branco(tela_interceptor,11,13);
-            Carimbo_Interceptor_Inspec(tela_interceptor,1,1);
-            Imprimir_Quadro(tela_interceptor,11,13);
-
-            for (int i = 0; i < 11; i++){
-                free(tela_interceptor[i]);
-            }
-            free(tela_interceptor);
-
-            break;
-        case 7:
-            printf("Y-Wing:\n");
-            celula** tela_ywing = (celula**)malloc(11*sizeof(celula*));
-            for (int i = 0; i < 11; i++){
-                tela_ywing[i] = (celula*)malloc(13*sizeof(celula));
-            }
-            Quadro_Branco(tela_ywing,11,13);
-            Carimbo_YWing_Inspec(tela_ywing,1,1);
-            Imprimir_Quadro(tela_ywing,11,13);
-
-            for (int i = 0; i < 11; i++){
-                free(tela_ywing[i]);
-            }
-            free(tela_ywing);
-
-            break;
-        case 8:
-            printf("A-Wing:\n");
-            celula** tela_awing = (celula**)malloc(10*sizeof(celula*));
-            for (int i = 0; i < 10; i++){
-                tela_awing[i] = (celula*)malloc(13*sizeof(celula));
-            }
-            Quadro_Branco(tela_awing,10,13);
-            Carimbo_AWing_Inspec(tela_awing,1,1);
-            Imprimir_Quadro(tela_awing,10,13);
-
-            for (int i = 0; i < 10; i++){
-                free(tela_awing[i]);
-            }
-            free(tela_awing);
-
-            break;
-        case 9:
-            printf("N1:\n");
-            celula** tela_n1 = (celula**)malloc(8*sizeof(celula*));
-            for (int i = 0; i < 8; i++){
-                tela_n1[i] = (celula*)malloc(11*sizeof(celula));
-            }
-            Quadro_Branco(tela_n1,8,11);
-            Carimbo_N1_Inspec(tela_n1,1,1);
-            Imprimir_Quadro(tela_n1,8,11);
-
-            for (int i = 0; i < 8; i++){
-                free(tela_n1[i]);
-            }
-            free(tela_n1);
-
-            break;
-        case 10:
-            printf("X-Wing:\n");
-            celula** tela_xwing = (celula**)malloc(11*sizeof(celula*));
-            for (int i = 0; i < 11; i++){
-                tela_xwing[i] = (celula*)malloc(15*sizeof(celula));
-            }
-            Quadro_Branco(tela_xwing,11,15);
-            Carimbo_XWing_Inspec(tela_xwing,1,1);
-            Imprimir_Quadro(tela_xwing,11,15);
-
-            for (int i = 0; i < 11; i++){
-                free(tela_xwing[i]);
-            }
-            free(tela_xwing);
-            break;
+    if (desenho == NULL) {
+        printf("Desenho invalido\n");
+        return;
     }
+
+    celula **tela = (celula**)malloc((desenho->ordem[0]+2)*sizeof(celula*));
+    for (int i = 0; i < desenho->ordem[0]+2; i++){
+        tela[i] = (celula*)malloc((desenho->ordem[1]+2)*sizeof(celula));
+    }
+
+    Quadro_Branco(tela,desenho->ordem[0]+2,desenho->ordem[1]+2);
+    for (int i = 0; i < desenho->ordem[0]; i++){
+        for (int j = 0; j < desenho->ordem[1]; j++){
+            if (desenho->desenho[i][j] != ' '){
+                tela[i+1][j+1].simbolo = desenho->desenho[i][j];
+            }
+        }
+    }
+    Imprimir_Quadro(tela,desenho->ordem[0]+2,desenho->ordem[1]+2);
+    for (int i = 0; i < desenho->ordem[0]+2; i++){
+        free(tela[i]);
+    }
+    free(tela);
 }
 
 int Menu_Continuar(){
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Deseja inspecionar outra forma?\n1 - Sim\n2 - Nao\n");
+        printf("Deseja inspecionar outro desenho?\n1 - Sim\n2 - Nao\n");
         printf("Escolha: ");
         scanf("%d",&escolha);
         if (escolha == 1){
@@ -281,21 +137,56 @@ int Menu_Continuar(){
     return escolha;
 }
 
-void Menu_Desenhos(){
-    int escolha;
+void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
+    int escolha_Pasta, escolha_Desenho;
+
+    if (carimbos == NULL) {
+        printf("Nenhum carimbo carregado.\n");
+        return;
+    }
+    
     while (1){
         printf("=================================\n");
-        printf("Escolha o desenho a ser inspecionado:\n");
-        printf("1 - Estrela\n2 - X\n3 - Soma\n4 - Star Destroyer\n5 - Fighter\n");
-        printf("6 - Interceptor\n7 - Y-Wing\n8 - A-Wing\n9 - N1\n10 - X-Wing\n");
-        printf("11 - Sair\n");
-        printf("Escolha: ");
-        scanf("%d",&escolha);
-        if (escolha >= 1 && escolha <= 10){
-            Imprime_Desenho(escolha);
-            break;
+        printf("Escolha a pasta do desenho:\n");
+        for (int i = 0; i < numPastas; i++) {
+            if (carimbos[i].quantidade <= 0) {
+                continue;
+            }
+            printf("%d - %s\n", i + 1, carimbos[i].nomePasta);
         }
-        else if (escolha == 11){
+        printf("%d - Sair\n", numPastas + 1);
+        printf("Escolha: ");
+        scanf("%d",&escolha_Pasta);
+        if (escolha_Pasta >= 1 && escolha_Pasta <= numPastas){
+
+            while (1) {
+                if (carimbos[escolha_Pasta - 1].quantidade <= 0) {
+                    printf("Nenhum carimbo disponível nesta pasta.\n");
+                    break;
+                }
+
+                printf("=================================\n");
+                printf("Escolha o desenho (numero):\n");
+                for (int j = 0; j < carimbos[escolha_Pasta - 1].quantidade; j++) {
+                    printf("%d - %s\n", j + 1, carimbos[escolha_Pasta - 1].carimbos[j].nome);
+                }
+                printf("%d - Voltar\n", carimbos[escolha_Pasta - 1].quantidade + 1);
+                printf("Escolha: ");
+                scanf("%d",&escolha_Desenho);
+
+                if (escolha_Desenho < 1 || escolha_Desenho > carimbos[escolha_Pasta - 1].quantidade + 1) {
+                    printf("Opcao invalida\n");
+                    continue;
+                }
+                else if (escolha_Desenho == carimbos[escolha_Pasta - 1].quantidade + 1) {
+                    break;
+                }
+
+                Imprime_Desenho(&carimbos[escolha_Pasta - 1].carimbos[escolha_Desenho - 1]);
+
+            }
+        }
+        else if (escolha_Pasta == numPastas + 1){
             break;
         }
         else {
@@ -495,3 +386,26 @@ bool Menu_Arquivo_Carregar(){
     return retorno;
 }
 
+
+/*int main(){
+    int numPastas = get_numDir(CAMINHO);
+    if (numPastas <= 0) {
+        return 1;
+    }
+
+    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
+    if (carimbos == NULL) {
+        fprintf(stderr, "Erro ao carregar carimbos\n");
+        return 1;
+    }
+
+    Menu_Desenhos(carimbos, numPastas);
+
+    // Libera a memória alocada para os carimbos
+    for (int i = 0; i < numPastas; i++) {
+        free(carimbos[i].carimbos);
+    }
+    free(carimbos);
+
+    return 0;
+}*/

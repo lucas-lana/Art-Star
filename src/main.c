@@ -1,7 +1,8 @@
-// Podem existir seeds que não tem como gerar uma figura válida
-#include "Pintura.c"
+#include "Arquivos.c"
 #include "menus.c"
 #include "carimbos.c"
+
+// Podem existir seeds que não tem como gerar uma figura válida
 int main(){
     bool reinicio = true;
     bool escolha;
@@ -39,9 +40,16 @@ int main(){
 
             else if (forma == 6){
                 while (true){
-                    Menu_Desenhos();
+                    int numPastas = get_numDir(CAMINHO);
+                    if (numPastas <= 0) {
+                        return 1;
+                    }
+                    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
+                    if (carimbos == NULL) {
+                        return 1;
+                    }
+                    Menu_Desenhos(carimbos, numPastas);
                     if (Menu_Continuar() == 2){
-
                         break;
                     }
                 }

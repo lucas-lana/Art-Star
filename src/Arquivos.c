@@ -1,16 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/stat.h>
-
 #include "arquivos.h"
-
-#include "carimbos.h"
-
-
-#define CAMINHO "/home/Lucas/Documentos/Codes/C/Trabalhos/Art-Star/carimbos"
-
 
 char* ler_carimbo(char* caminho) {
     FILE* leitor = fopen(caminho, "r");
@@ -291,7 +279,7 @@ ConjuntoCarimbos* carrega_Carimbos(int numPastas, char* caminho){
     return pastas_Carimbos;
 }
 
-int main(){
+/*int main(){
 
     int numPastas = get_numDir(CAMINHO);
     if (numPastas <= 0) {
@@ -336,4 +324,4 @@ int main(){
     free(carimbos);
 
     return 0;
-}
+}*/
