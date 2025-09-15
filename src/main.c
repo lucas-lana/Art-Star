@@ -5,7 +5,6 @@
 #define COLUNAS 80
 #define CAMINHO "../../carimbos/"  // Caminho padrão para a pasta de carimbos
 
-// Podem existir seeds que não tem como gerar uma figura válida
 int main(){
     bool reinicio = true;
     bool escolha;

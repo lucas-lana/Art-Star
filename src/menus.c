@@ -385,27 +385,3 @@ bool Menu_Arquivo_Carregar(){
     }
     return retorno;
 }
-
-
-/*int main(){
-    int numPastas = get_numDir(CAMINHO);
-    if (numPastas <= 0) {
-        return 1;
-    }
-
-    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
-    if (carimbos == NULL) {
-        fprintf(stderr, "Erro ao carregar carimbos\n");
-        return 1;
-    }
-
-    Menu_Desenhos(carimbos, numPastas);
-
-    // Libera a memória alocada para os carimbos
-    for (int i = 0; i < numPastas; i++) {
-        free(carimbos[i].carimbos);
-    }
-    free(carimbos);
-
-    return 0;
-}*/

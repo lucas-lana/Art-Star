@@ -97,7 +97,9 @@ int* get_dim_Carimbo(char* carimbo_texto){
             }
         }
     }
-    //printf("Dimensões do carimbo: %d x %d\n", dim[0], dim[1]);
+
+    dim[0] = dim[0]+2;
+    dim[1] = dim[1]+2;
     return dim;
 }
 
@@ -180,7 +182,7 @@ Carimbos_Num* get_Carimbos(char* caminho) {
         }
 
         // Preenche desenho com conteúdo do arquivo
-        int linha = 0, coluna = 0;
+        int linha = 1, coluna = 1;
         for (int j = 0; carimbos[c].texto[j] != '\0'; j++) {
             if (linha >= dim[0]) {
                 break; // Não exceder número de linhas
@@ -188,8 +190,9 @@ Carimbos_Num* get_Carimbos(char* caminho) {
 
             if (carimbos[c].texto[j] == '\n') {
                 linha++;
-                coluna = 0;
-            } else if (coluna < dim[1]) {
+                coluna = 1;
+            } 
+            else if (coluna < dim[1]-1) {
                 carimbo.desenho[linha][coluna] = carimbos[c].texto[j];
                 coluna++;
             }
@@ -270,60 +273,7 @@ ConjuntoCarimbos* carrega_Carimbos(int numPastas, char* caminho){
             pastas_Carimbos[index].carimbos = aux->carimbos;
             pastas_Carimbos[index].quantidade = aux->quantidade;
             free(aux);
-
-            /*
-            for (int i = 0; i < pastas_Carimbos[index].quantidade; i++) {
-                printf("Carimbo encontrado: %s\n", pastas_Carimbos[index].carimbos[i].nome);
-            }
-            */
         }
     }
     return pastas_Carimbos;
 }
-
-/*int main(){
-
-    int numPastas = get_numDir(CAMINHO);
-    if (numPastas <= 0) {
-        return 1;
-    }
-
-    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
-    if (carimbos == NULL) {
-        fprintf(stderr, "Erro ao carregar carimbos\n");
-        return 1;
-    }
-
-    // Imprime os dados presentes em 'carimbos'
-    for (int i = 0; i < numPastas; i++) {
-        if (!carimbos[i].carimbos || carimbos[i].quantidade <= 0) {
-            continue;
-        }
-
-        printf("Pasta: %s\n", carimbos[i].nomePasta);
-        printf("Quantidade de carimbos: %d\n", carimbos[i].quantidade);
-
-
-        for (int j = 0; j < carimbos[i].quantidade; j++) {
-            Carimbo* c = &carimbos[i].carimbos[j];
-            printf("  Carimbo %d: %s (%dx%d)\n", j + 1, c->nome, c->ordem[0], c->ordem[1]);
-
-            if (c->desenho) {
-                for (int r = 0; r < c->ordem[0]; r++) {
-                    if (c->desenho[r]) {
-                        printf("    %s\n", c->desenho[r]);
-                    }
-                }
-            }
-        }
-        printf("\n");
-    }
-
-    // Libera a memória alocada
-    for (int i = 0; i < numPastas; i++) {
-        free(carimbos[i].carimbos);
-    }
-    free(carimbos);
-
-    return 0;
-}*/
