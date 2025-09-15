@@ -1,10 +1,6 @@
 #include "carimbos.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#define CAMINHO "/home/Lucas/Documentos/Codes/C/Trabalhos/Art-Star/carimbos"
 
 typedef struct {
     char texto[254];

@@ -1,7 +1,6 @@
 #ifndef MENUS_H
 #define MENUS_H
 
-#include "celula.h"
 #include "carimbos.h"
 
 int Menu_seed();

@@ -4,10 +4,6 @@
 #include "carimbos.h"
 
 
-#define LINHAS 20
-#define COLUNAS 80
-
-
 void Carimbo_Estrela(celula **tela, int i, int j){
     tela[i][j].simbolo = '*';
     tela[i][j].preenchido = true;
@@ -108,6 +104,50 @@ bool verificar_Espaco(celula** tela,int linhas, int colunas, int ref_i, int ref_
         }
     }
     return true;
+}
+
+bool Carimbar_Desenho(celula** tela,Carimbo* carimbo,int linhas, int colunas,int figura,int x, int y,int direcao){
+    bool carimbado = false;
+
+    if (verificar_Espaco(tela,linhas,colunas,x,y,carimbo[figura].ordem[0],carimbo[figura].ordem[1])){
+        if(direcao == 0){
+            for (int i = 0; i < carimbo[figura].ordem[0]; i++){
+                for (int j = 0; j < carimbo[figura].ordem[1]; j++){
+                    if (carimbo[figura].desenho[i][j] != ' '){
+                        tela[x+i][y+j].simbolo = carimbo[figura].desenho[i][j];
+                    }
+                    tela[x+i][y+j].preenchido = true;
+                }
+            }
+        }
+        
+        else{
+            
+            // Alocar memória para a matriz temporária
+            char** temp = (char**)malloc(carimbo[figura].ordem[0]*sizeof(char*));
+            for (int i = 0; i < carimbo[figura].ordem[0]; i++){
+                temp[i] = (char*)malloc(carimbo[figura].ordem[1]*sizeof(char));
+            }
+            temp = inverte_carimbo(carimbo[figura].desenho,carimbo[figura].ordem[0],carimbo[figura].ordem[1]);
+
+            for (int i = 0; i < carimbo[figura].ordem[0]; i++){
+                for (int j = 0; j < carimbo[figura].ordem[1]; j++){
+                    if (temp[i][j] != ' '){
+                        tela[x+i][y+j].simbolo = temp[i][j];
+                    }
+                    tela[x+i][y+j].preenchido = true;
+                }
+            }
+                    
+            // Liberar a memória alocada para temp
+            for (int i = 0; i < carimbo[figura].ordem[0]; i++){
+                free(temp[i]);
+            }
+            free(temp);
+        }
+        carimbado = true;
+    }
+    return carimbado;
 }
 
 #endif // CARIMBOS_C

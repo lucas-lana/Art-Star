@@ -1,4 +1,4 @@
-#include "naves.c"
+#include "carimbos.c"
 
 void Quadro_Branco(celula **tela, int linhas, int colunas){
     for (int i = 0; i < linhas; i++){
@@ -19,33 +19,33 @@ void Quadro_Branco(celula **tela, int linhas, int colunas){
     }
 }
 
-int Get_Coordenada(int seed,int i,int old_coordenada,bool tipo,int equacao){ // Necessário melhorar a formula de geração de coordenadas
+int Get_Coordenada(int linhas, int colunas,int seed,int i,int old_coordenada,bool tipo,int equacao){ // Necessário melhorar a formula de geração de coordenadas
     int coordenada;
     
     if (!tipo){ // Coordenada X
         if (i == 0)
-            coordenada = seed % LINHAS;
+            coordenada = seed % linhas;
         else 
 
             switch (equacao) {
             case 1:
                  // Fórmula muito boa, funciona sempre, media repetições, bem aleatório
-                coordenada = ((old_coordenada*i*((old_coordenada+seed)%i)) + seed + i)%LINHAS;
+                coordenada = ((old_coordenada*i*((old_coordenada+seed)%i)) + seed + i)%linhas;
                 break;
 
             case 2:
                 // Fórmula muito boa, funciona sempre, media repetições, bem aleatório
-                coordenada = ((old_coordenada*i*(old_coordenada%i)) + seed + i)%LINHAS;
+                coordenada = ((old_coordenada*i*(old_coordenada%i)) + seed + i)%linhas;
                 break;
 
             case 3:
                 // Fórmula muito boa, funciona sempre, media repetições, bem aleatório
-                coordenada = ((old_coordenada*i*(i%LINHAS)) + seed + i)%LINHAS;
+                coordenada = ((old_coordenada*i*(i%linhas)) + seed + i)%linhas;
                 break;
 
             case 4:
                 // Formula boa, funciona sempre, poucas repetições, mas pouco aleatório
-                coordenada = ((old_coordenada*i*LINHAS) + seed + i)%LINHAS;
+                coordenada = ((old_coordenada*i*linhas) + seed + i)%linhas;
                 break;
             
             default:
@@ -55,28 +55,28 @@ int Get_Coordenada(int seed,int i,int old_coordenada,bool tipo,int equacao){ // 
 
     else{ // Coordenada Y
         if (i == 0)
-            coordenada = seed % COLUNAS;
+            coordenada = seed % colunas;
         else
 
             switch (equacao) {
             case 1:
                 // Fórmula muito boa, funciona sempre, media repetições, bem aleatório
-                coordenada = ((old_coordenada*i*((old_coordenada+seed)%i)) + seed + i)%COLUNAS;
+                coordenada = ((old_coordenada*i*((old_coordenada+seed)%i)) + seed + i)%colunas;
                 break;
             
             case 2:
                 // Fórmula muito boa, funciona sempre, media repetições, bem aleatório
-                coordenada = ((old_coordenada*i*(old_coordenada%i)) + seed + i)%COLUNAS;
+                coordenada = ((old_coordenada*i*(old_coordenada%i)) + seed + i)%colunas;
                 break;
 
             case 3:
                 // Fórmula muito boa, funciona sempre, media repetições, bem aleatório
-                coordenada = ((old_coordenada*i*(i%COLUNAS)) + seed + i)%COLUNAS;
+                coordenada = ((old_coordenada*i*(i%colunas)) + seed + i)%colunas;
                 break;
 
             case 4:
                 // Formula boa, funciona sempre, poucas repetições, mas pouco aleatório
-                coordenada = ((old_coordenada*i*COLUNAS) + seed + i)%COLUNAS;
+                coordenada = ((old_coordenada*i*colunas) + seed + i)%colunas;
                 break;
             
             default:
@@ -92,16 +92,27 @@ int Get_Coordenada(int seed,int i,int old_coordenada,bool tipo,int equacao){ // 
     return coordenada;
 }
 
-long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,int carimbadas,int equacao,int index){
+long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,int linhas, int colunas, int seed,int carimbo,int carimbadas,int equacao,int index){
     long int guarda = 0;
     int loop = 0;
-    int limear = pow(2,((sizeof(int)*5)));
+    int limear = pow(2,((sizeof(int)*4)));
     int x,y,old_x,old_y;
     int reset = 0;
 
+    int jndex = 0;
+    while(1){
+        if (strcmp(carimbosPasta[jndex].nomePasta, "Naves") == 0){
+            break;
+        }
+        jndex++;
+        if (jndex > numPastas){
+            return -1;
+        }
+    }
+
     while (loop < carimbadas){
 
-        if (index >= limear && reset < 2 && carimbo == 5){ 
+        if (index >= limear && reset < 2){ 
             
             guarda += index;
             index = 1;
@@ -119,12 +130,12 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
         else if (reset >= 2){
             return (guarda + index) - carimbadas;
         }
-        
-        if (!((old_x == 0 || old_y == 0) || (old_x == LINHAS || old_y == COLUNAS))){
+
+        if (!((old_x == 0 || old_y == 0) || (old_x == linhas || old_y == colunas))){
 
 
-            x = Get_Coordenada(seed,index,old_x,false,equacao);
-            y = Get_Coordenada(seed,index,old_y,true,equacao);
+            x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+            y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
 
             switch (carimbo){
                 case 1:
@@ -136,8 +147,8 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                         loop++;
                         
                     } else{
-                        x = Get_Coordenada(seed,index,old_x,false,equacao);
-                        y = Get_Coordenada(seed,index,old_y,true,equacao);
+                        x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+                        y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
                         old_x = x;
                         old_y = y;
                         
@@ -154,12 +165,13 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                         loop++;
                         
                     } else{
-                        x = Get_Coordenada(seed,index,old_x,false,equacao);
-                        y = Get_Coordenada(seed,index,old_y,true,equacao);
+                        x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+                        y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
                         old_x = x;
                         old_y = y;
                         
                         index++;
+                        
                     }
                 break;
 
@@ -172,8 +184,8 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                         loop++;
                         
                     } else{
-                        x = Get_Coordenada(seed,index,old_x,false,equacao);
-                        y = Get_Coordenada(seed,index,old_y,true,equacao);
+                        x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+                        y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
                         old_x = x;
                         old_y = y;
                         
@@ -191,8 +203,8 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                         loop++;
                         
                     } else{
-                        x = Get_Coordenada(seed,index,old_x,false,equacao);
-                        y = Get_Coordenada(seed,index,old_y,true,equacao);
+                        x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+                        y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
                         old_x = x;
                         old_y = y;
                         
@@ -201,7 +213,7 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                 break;
 
                 case 5:
-                    bool carimbado_Nave = Carimbar_Nave(tela,((seed + index) % 6),x,y,index);
+                    bool carimbado_Nave = Carimbar_Desenho(tela,carimbosPasta[jndex].carimbos,linhas, colunas,((seed + index) % 6),x,y,(index%2));
                     if (carimbado_Nave){
                         old_x = x;
                         old_y = y;
@@ -209,8 +221,8 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
                         loop++;
                         
                     } else{
-                        x = Get_Coordenada(seed,index,old_x,false,equacao);
-                        y = Get_Coordenada(seed,index,old_y,true,equacao);
+                        x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+                        y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
                         old_x = x;
                         old_y = y;
                         
@@ -223,8 +235,8 @@ long int Carimbar(celula** tela,int linhas, int colunas, int seed,int carimbo,in
         }
 
         else {
-            x = Get_Coordenada(seed,index,old_x,false,equacao);
-            y = Get_Coordenada(seed,index,old_y,true,equacao);
+            x = Get_Coordenada(linhas,colunas,seed,index,old_x,false,equacao);
+            y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
             old_x = x;
             old_y = y;
         }

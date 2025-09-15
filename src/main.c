@@ -1,6 +1,9 @@
 #include "Arquivos.c"
 #include "menus.c"
-#include "carimbos.c"
+
+#define LINHAS 20
+#define COLUNAS 80
+#define CAMINHO "../../carimbos/"  // Caminho padrão para a pasta de carimbos
 
 // Podem existir seeds que não tem como gerar uma figura válida
 int main(){
@@ -13,6 +16,14 @@ int main(){
     celula **tela = malloc(LINHAS * sizeof(celula *));
     for (int i = 0; i < LINHAS; i++) {
         tela[i] = malloc(COLUNAS * sizeof(celula));
+    }
+    int numPastas = get_numDir(CAMINHO);
+    if (numPastas <= 0) {
+        return 1;
+    }
+    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
+    if (carimbos == NULL) {
+        return 1;
     }
     
     printf("PROGRAMA GERADOR DE OBRA DE ARTE:\n");
@@ -28,26 +39,13 @@ int main(){
                 seed = Menu_Seed();
                 estrelas = Menu_Quantidade_Estrelas();
                 naves = Menu_Quantidade_Naves();
-                long int conflito_naves = Carimbar(tela,LINHAS,COLUNAS,seed,5,naves,1,0);
-                long int conflito_estrelas = Carimbar(tela,LINHAS,COLUNAS,seed,1,estrelas,1,0);
+                long int conflito_naves = Carimbar(tela,carimbos,numPastas,LINHAS,COLUNAS,seed,5,naves,1,0);
+                long int conflito_estrelas = Carimbar(tela,carimbos,numPastas,LINHAS,COLUNAS,seed,1,estrelas,1,0);
                 rep = conflito_estrelas + conflito_naves;
-                if (rep > pow(2,((sizeof(int)*6)))){
-                    rep = Carimbar(tela,LINHAS,COLUNAS,seed,1,estrelas,1,0);
-                    rep += conflito_naves;
-                }
-                
             }
 
             else if (forma == 6){
                 while (true){
-                    int numPastas = get_numDir(CAMINHO);
-                    if (numPastas <= 0) {
-                        return 1;
-                    }
-                    ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
-                    if (carimbos == NULL) {
-                        return 1;
-                    }
                     Menu_Desenhos(carimbos, numPastas);
                     if (Menu_Continuar() == 2){
                         break;
@@ -58,7 +56,7 @@ int main(){
             else {
                 seed = Menu_Seed();
                 quantidade = Menu_Quantidade();
-                rep = Carimbar(tela,LINHAS,COLUNAS,seed,forma,quantidade,1,0);
+                rep = Carimbar(tela,carimbos,numPastas,LINHAS,COLUNAS,seed,forma,quantidade,1,0);
             }
             
             //int equacao = Menu_Equacao();

@@ -97,7 +97,7 @@ int* get_dim_Carimbo(char* carimbo_texto){
             }
         }
     }
-    printf("Dimensões do carimbo: %d x %d\n", dim[0], dim[1]);
+    //printf("Dimensões do carimbo: %d x %d\n", dim[0], dim[1]);
     return dim;
 }
 
@@ -121,7 +121,7 @@ Carimbos_Num* get_Carimbos(char* caminho) {
         num_carimbos++;
     }
     
-    printf("Número total de carimbos: %d\n", num_carimbos);
+    //printf("Número total de carimbos: %d\n", num_carimbos);
 
     if (num_carimbos == 0) {
         return NULL;
@@ -271,9 +271,11 @@ ConjuntoCarimbos* carrega_Carimbos(int numPastas, char* caminho){
             pastas_Carimbos[index].quantidade = aux->quantidade;
             free(aux);
 
+            /*
             for (int i = 0; i < pastas_Carimbos[index].quantidade; i++) {
                 printf("Carimbo encontrado: %s\n", pastas_Carimbos[index].carimbos[i].nome);
             }
+            */
         }
     }
     return pastas_Carimbos;
