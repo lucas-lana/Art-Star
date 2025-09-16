@@ -1,3 +1,4 @@
+#include <string.h>
 #include "carimbos.c"
 
 void Quadro_Branco(celula **tela, int linhas, int colunas){
@@ -245,78 +246,101 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
 }
 
 
-void Imprimir_Quadro(celula **tela, int linhas, int colunas){
+void Imprimir_Quadro(celula **tela, int linhas, int colunas,bool colorido){
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
-            if (tela[i][j].simbolo == ' ')
-                printf(" ");
-            else if (tela[i][j].simbolo == '|')
-                printf("|");
-            else if (tela[i][j].simbolo == '-')
-                printf("-");
-            else 
-                printf("*");
-        };
-        printf("\n");
-    }
-}
-
-void Imprimir_Quadro_Cor(char **tela,int linhas, int colunas) {
-    for(int i = 0; i < linhas; i++) {
-        for(int j = 0; j < colunas; j++) {
-
-            if (tela[i][j] == '*') {
-                //Definir cor branca
-                printf("*");
-            }
-
-            else if (tela[i][j] == '#') {
-                //Definir cor vermelho
-                printf("\033[31m*\033[0m");
-            }
-
-            else if (tela[i][j] == '$') {
-                //Definir cor verde
-                printf("\033[32m*\033[0m");
-            }
-
-            else if (tela[i][j] == '%') {
-                //Definir cor azul
-                printf("\033[34m*\033[0m");   
-            }
-
-            else if (tela[i][j] == '&') {
-                //Definir cor amarela
-                printf("\033[33m*\033[0m");
-            }
-
-            else if (tela[i][j] == '^') {
-                //Definir cor magenta
-                printf("\033[35m*\033[0m");   
-            }
-
-            else if (tela[i][j] == '@') {
-                //Definir cor ciano
-                printf("\033[36m*\033[0m");
-            }
-
-            else if (tela[i][j] == '~') {
-                //Definir cor preta
-                printf("\033[30m*\033[0m");   
-            }
-
-            else if (tela[i][j] == '|') {
-                printf("|");   
-            }
-            
-            else if (tela[i][j] == '-') {
-                printf("-");   
-            }
-
-            else {
-                printf(" ");
+            if (colorido) {
+                imprime_char_colorido(tela[i][j].simbolo);
+            } else {
+                printf("%c", tela[i][j].simbolo);
             }
         }
         printf("\n");
     }
+}
+
+void imprime_char_colorido(char c) {
+
+    if (c == '*') {
+        //Definir cor branca
+        printf("*");
+    }
+
+    else if (c == '#') {
+        //Definir cor vermelho
+        printf("\033[31m*\033[0m");
+    }
+
+    else if (c == '$') {
+        //Definir cor verde
+        printf("\033[32m*\033[0m");
+    }
+
+    else if (c == '%') {
+        //Definir cor azul
+        printf("\033[34m*\033[0m");   
+    }
+
+    else if (c == '&') {
+        //Definir cor amarela
+        printf("\033[33m*\033[0m");
+    }
+
+    else if (c == '^') {
+        //Definir cor magenta
+        printf("\033[35m*\033[0m");   
+    }
+
+    else if (c == '@') {
+        //Definir cor ciano
+        printf("\033[36m*\033[0m");
+    }
+
+    else if (c == '~') {
+        //Definir cor preta
+        printf("\033[30m*\033[0m");   
+    }
+
+    else if (c == '|') {
+        printf("|");   
+    }
+
+    else if (c == '-') {
+        printf("-");   
+    }
+
+    else {
+        printf(" ");
+    }
+}
+
+void imprime_elemento(char** carimbo,int linhas,int colunas,bool colorido) {
+    for(int i = 0; i < linhas; i++) {
+        for(int j = 0; j < colunas; j++) {
+            if (colorido) {
+                imprime_char_colorido(carimbo[i][j]);
+            } else {
+                printf("%c", carimbo[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int limite_desenho(ConjuntoCarimbos* Pastas,int numPastas,char* nomePasta,int linhas,int colunas){
+    int ordem_max = 0;
+    ConjuntoCarimbos* desenhos;
+    for (int i = 0; i < numPastas; i++) {
+        if (strcmp(Pastas[i].nomePasta, nomePasta) == 0) {
+            desenhos = &Pastas[i];
+            break;
+        }
+    }
+
+    for (int i = 0; i < desenhos->quantidade; i++){
+        int ordem_atual = desenhos->carimbos[i].ordem[0] * desenhos->carimbos[i].ordem[1];
+        if (ordem_atual >= ordem_max)
+            ordem_max = ordem_atual;
+    }
+    return (linhas * colunas / ordem_max)/2;
 }

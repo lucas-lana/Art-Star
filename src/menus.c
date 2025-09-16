@@ -50,17 +50,18 @@ int Menu_Quantidade(){
     return escolha;
 }
 
-int Menu_Quantidade_Estrelas(){
+int Menu_Quantidade_Estrelas(int linhas, int colunas){
+    int limite = (linhas * colunas) / ((linhas * colunas)/100);
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Digite a quantidade de estrelas 1 à 100 (menor ou igual a zero será aleatorio): ");
+        printf("Digite a quantidade de estrelas 0 à %d (menor que zero, ou maior que %d será aleatorio): ", limite, limite);
         scanf("%d",&escolha);
-        if (escolha <= 0 && escolha > 100){
-            escolha = rand() % 100;
+        if (escolha < 0 || escolha > limite){
+            escolha = rand() % limite;
             break;
         }
-        else if (escolha > 0 && escolha <= 100){
+        else if (escolha >= 0 && escolha <= limite){
             break;
         }
         else {
@@ -70,17 +71,17 @@ int Menu_Quantidade_Estrelas(){
     return escolha;
 }
 
-int Menu_Quantidade_Naves(){
+int Menu_Quantidade_Naves(int limite){
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Digite a quantidade de naves 1 à 6 (menor ou igual a zero será aleatorio): ");
+        printf("Digite a quantidade de naves 0 à %d (menor que zero, ou maior que %d será aleatorio): ",limite, limite);
         scanf("%d",&escolha);
-        if (escolha <= 0 || escolha > 6){
-            escolha = rand() % 6;
+        if (escolha < 0 || escolha > limite){
+            escolha = rand() % limite;
             break;
         }
-        else if (escolha > 0 && escolha <= 6){
+        else if (escolha >= 0 && escolha <= limite){
             break;
         }
         else {
@@ -110,7 +111,7 @@ void Imprime_Desenho(Carimbo* desenho){
             }
         }
     }
-    Imprimir_Quadro(tela,desenho->ordem[0]+2,desenho->ordem[1]+2);
+    Imprimir_Quadro(tela,desenho->ordem[0]+2,desenho->ordem[1]+2,false);
     for (int i = 0; i < desenho->ordem[0]+2; i++){
         free(tela[i]);
     }

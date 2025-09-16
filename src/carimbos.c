@@ -90,6 +90,36 @@ char** inverte_carimbo(char** carimbo,int linhas,int colunas) {
     return invertido;
 }
 
+char** espelha_carimbo(char** carimbo,int linhas,int colunas) {
+    char **espelhado = (char **)malloc(linhas * sizeof(char *));
+    for(int i = 0; i < linhas; i++) {
+        espelhado[i] = (char *)malloc(colunas * sizeof(char));
+    }
+    
+    for(int i = 0; i < linhas; i++) {
+        for(int j = 0; j < colunas; j++) {
+            espelhado[i][colunas-1-j] = carimbo[i][j];
+        }
+    }
+
+    return espelhado;
+}
+
+char** esquerda_carimbo(char** carimbo,int linhas,int colunas) {
+    char **esquerdo = (char **)malloc(linhas * sizeof(char *));
+    for(int i = 0; i < linhas; i++) {
+        esquerdo[i] = (char *)malloc(colunas * sizeof(char));
+    }
+    
+    for(int j = 0; j < colunas; j++) {
+        for(int i = 0; i < linhas; i++) {
+            esquerdo[i][colunas-1-j] = carimbo[i][j];
+        }
+    }
+
+    return esquerdo;
+}
+
 bool verificar_Espaco(celula** tela,int linhas, int colunas, int ref_i, int ref_j, int linhas_carimbo, int colunas_carimbo) {
     for (int i = 0; i < linhas_carimbo; i++) {
         for ( int j = 0; j < colunas_carimbo; j++) {

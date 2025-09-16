@@ -36,8 +36,8 @@ int main(){
             int seed;
             if (forma == 5){
                 seed = Menu_Seed();
-                estrelas = Menu_Quantidade_Estrelas();
-                naves = Menu_Quantidade_Naves();
+                estrelas = Menu_Quantidade_Estrelas(LINHAS,COLUNAS);
+                naves = Menu_Quantidade_Naves(limite_desenho(carimbos,numPastas,"Naves",LINHAS,COLUNAS));
                 long int conflito_naves = Carimbar(tela,carimbos,numPastas,LINHAS,COLUNAS,seed,5,naves,1,0);
                 long int conflito_estrelas = Carimbar(tela,carimbos,numPastas,LINHAS,COLUNAS,seed,1,estrelas,1,0);
                 rep = conflito_estrelas + conflito_naves;
@@ -60,7 +60,7 @@ int main(){
             
             //int equacao = Menu_Equacao();
             if (forma != 6){
-                Imprimir_Quadro(tela,LINHAS,COLUNAS);
+                Imprimir_Quadro(tela,LINHAS,COLUNAS,false);
                 printf("Seed: %d\n",seed);
                 if (forma == 5){
                     printf("Quantidade de naves: %d\n",naves);
@@ -83,7 +83,7 @@ int main(){
             rep = p[1];
             formas = p[2];
             naves = p[3];
-            Imprimir_Quadro(tela,LINHAS,COLUNAS);
+            Imprimir_Quadro(tela,LINHAS,COLUNAS,false);
             printf("Seed: %d\n",seed);
             if (naves>0){
                 printf("Quantidade de naves: %d\n",naves);
