@@ -3,12 +3,37 @@
 
 #include "carimbos.h"
 
-
+/*
+ * Carimbo_Estrela
+ *
+ * Coloca um símbolo de estrela na posição (i, j) da tela.
+ *
+ * Parâmetros:
+ * - celula **tela: A tela onde o carimbo será aplicado.
+ * - int i: A linha onde o carimbo será aplicado.
+ * - int j: A coluna onde o carimbo será aplicado.
+*/
 void Carimbo_Estrela(celula **tela, int i, int j){
     tela[i][j].simbolo = '*';
     tela[i][j].preenchido = true;
 }
 
+
+/*
+ * Verificar_3x3
+ *
+ * Verifica se uma área 3x3 na posição (i, j) da tela está completamente vazia (não preenchida).
+ * 
+ * Parâmetros:
+ * - celula **tela: A tela onde a verificação será feita.
+ * - int i: A linha inicial da área 3x3.
+ * - int j: A coluna inicial da área 3x3.
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * 
+ * Output:
+ * - bool: Retorna true se a área 3x3 estiver completamente vazia, caso contrário, retorna false.
+*/
 bool Verificar_3x3(celula **tela, int i, int j, int linhas, int colunas){
     if (i < 0 || j < 0 || i + 2 >= linhas || j + 2 >= colunas) {
         return false; // Fora dos limites da tela
@@ -19,6 +44,17 @@ bool Verificar_3x3(celula **tela, int i, int j, int linhas, int colunas){
     return linha1 && linha2 && linha3;
 }
 
+
+/*
+ * Carimbo_Soma
+ *
+ * Coloca um símbolo de soma na posição (i, j) da tela.
+ *
+ * Parâmetros:
+ * - celula **tela: A tela onde o carimbo será aplicado.
+ * - int i: A linha onde o carimbo será aplicado.
+ * - int j: A coluna onde o carimbo será aplicado.
+*/
 void Carimbo_Soma(celula **tela, int i, int j){
 
     tela[i][j+1].simbolo = '*';
@@ -35,6 +71,16 @@ void Carimbo_Soma(celula **tela, int i, int j){
     
 }
 
+/*
+ * Carimbo_X
+ *
+ * Coloca um símbolo de X na posição (i, j) da tela.
+ *
+ * Parâmetros:
+ * - celula **tela: A tela onde o carimbo será aplicado.
+ * - int i: A linha onde o carimbo será aplicado.
+ * - int j: A coluna onde o carimbo será aplicado.
+*/
 void Carimbo_X(celula **tela, int i, int j){
 
     tela[i][j].simbolo = '*';
@@ -50,6 +96,24 @@ void Carimbo_X(celula **tela, int i, int j){
     }
 }
 
+
+
+/*
+ * Carimbo_Aleatorio
+ *
+ * Aplica um carimbo aleatório (Estrela, Soma ou X) na posição (i, j) da tela, se possível.
+ *
+ * Parâmetros:
+ * - celula **tela: A tela onde o carimbo será aplicado.
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * - int i: A linha onde o carimbo será aplicado.
+ * - int j: A coluna onde o carimbo será aplicado.
+ * - int tipo: O tipo de carimbo a ser aplicado (0 para Estrela, 1 para Soma, 2 para X).
+ * 
+ * Output:
+ * - bool: Retorna true se o carimbo foi aplicado com sucesso, caso contrário, retorna false.
+*/
 bool Carimbo_Aleatorio(celula **tela,int linhas,int colunas, int i, int j,int tipo){
     bool carimbado;
     switch (tipo){
@@ -75,6 +139,19 @@ bool Carimbo_Aleatorio(celula **tela,int linhas,int colunas, int i, int j,int ti
     return carimbado;
 }
 
+
+/*
+ * inverte_carimbo
+ * Inverte um carimbo verticalmente (coloca de cabeça para baixo). O chamador é responsável por liberar a memória alocada para o carimbo invertido.
+ * 
+ * Parâmetros:
+ * - char** carimbo: O carimbo a ser invertido.
+ * - int linhas: O número de linhas do carimbo.
+ * - int colunas: O número de colunas do carimbo.
+ * 
+ * Output:
+ * - char**: O carimbo invertido.
+*/
 char** inverte_carimbo(char** carimbo,int linhas,int colunas) {
     char **invertido = (char **)malloc(linhas * sizeof(char *));
     for(int i = 0; i < linhas; i++) {
@@ -90,6 +167,19 @@ char** inverte_carimbo(char** carimbo,int linhas,int colunas) {
     return invertido;
 }
 
+
+/*
+ * espelha_carimbo
+ * Espelha um carimbo horizontalmente (da esquerda para a direita). O chamador é responsável por liberar a memória alocada para o carimbo espelhado.
+ * 
+ * Parâmetros:
+ * - char** carimbo: O carimbo a ser espelhado.
+ * - int linhas: O número de linhas do carimbo.
+ * - int colunas: O número de colunas do carimbo.
+ * 
+ * Output:
+ * - char**: O carimbo espelhado.
+*/
 char** espelha_carimbo(char** carimbo,int linhas,int colunas) {
     char **espelhado = (char **)malloc(linhas * sizeof(char *));
     for(int i = 0; i < linhas; i++) {
@@ -105,6 +195,19 @@ char** espelha_carimbo(char** carimbo,int linhas,int colunas) {
     return espelhado;
 }
 
+
+/*
+ * esquerda_carimbo
+ * Rotaciona um carimbo 90 graus para a esquerda. O chamador é responsável por liberar a memória alocada para o carimbo rotacionado.
+ * 
+ * Parâmetros:
+ * - char** carimbo: O carimbo a ser rotacionado.
+ * - int linhas: O número de linhas do carimbo.
+ * - int colunas: O número de colunas do carimbo.
+ * 
+ * Output:
+ * - char**: O carimbo rotacionado 90 graus para a esquerda.
+*/
 char** esquerda_carimbo(char** carimbo,int linhas,int colunas) {
     char **esquerdo = (char **)malloc(linhas * sizeof(char *));
     for(int i = 0; i < linhas; i++) {
@@ -120,6 +223,24 @@ char** esquerda_carimbo(char** carimbo,int linhas,int colunas) {
     return esquerdo;
 }
 
+
+/*
+ * verificar_Espaco
+ * 
+ * Verifica se há espaço suficiente em uma área da tela para aplicar um carimbo.
+ * 
+ * Parâmetros:
+ * - celula** tela: A tela onde o carimbo será aplicado.
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * - int ref_i: A linha inicial onde o carimbo será aplicado.
+ * - int ref_j: A coluna inicial onde o carimbo será aplicado.
+ * - int linhas_carimbo: O número de linhas do carimbo.
+ * - int colunas_carimbo: O número de colunas do carimbo.
+ * 
+ * Output:
+ * - bool: Retorna true se houver espaço suficiente para aplicar o carimbo, caso contrário, retorna false.
+*/
 bool verificar_Espaco(celula** tela,int linhas, int colunas, int ref_i, int ref_j, int linhas_carimbo, int colunas_carimbo) {
     for (int i = 0; i < linhas_carimbo; i++) {
         for ( int j = 0; j < colunas_carimbo; j++) {
@@ -136,6 +257,25 @@ bool verificar_Espaco(celula** tela,int linhas, int colunas, int ref_i, int ref_
     return true;
 }
 
+
+/*
+ * Carimbar_Desenho
+ *
+ * Aplica um carimbo em uma posição específica da tela, considerando a direção (normal ou invertida).
+ *
+ * Parâmetros:
+ * - celula** tela: A tela onde o carimbo será aplicado.
+ * - Carimbo* carimbo: O array de carimbos disponíveis.
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * - int figura: O índice do carimbo a ser aplicado.
+ * - int x: A linha onde o carimbo será aplicado.
+ * - int y: A coluna onde o carimbo será aplicado.
+ * - int direcao: A direção do carimbo (0 para normal, 1 para invertido).
+ *
+ * Output:
+ * - bool: Retorna true se o carimbo foi aplicado com sucesso, caso contrário, retorna false.
+*/
 bool Carimbar_Desenho(celula** tela,Carimbo* carimbo,int linhas, int colunas,int figura,int x, int y,int direcao){
     bool carimbado = false;
 

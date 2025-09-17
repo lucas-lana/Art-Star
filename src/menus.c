@@ -1,5 +1,5 @@
 #include "menus.h"
-#include "Pintura.c"
+#include "pintura.c"
 
 int Menu_Seed(){
     int escolha;

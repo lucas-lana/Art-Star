@@ -1,6 +1,16 @@
 #include <string.h>
-#include "carimbos.c"
+#include "pintura.h"
 
+/*
+ * Quadro_Branco
+ *
+ * Inicializa a tela com um quadro branco, onde as bordas são representadas por '-' e '|', e o interior é preenchido com espaços em branco.
+ *
+ * Parâmetros:
+ * - celula **tela: A tela a ser inicializada.
+ * - int linhas: O número de linhas da tela.
+ * - int colunas: O número de colunas da tela.
+*/
 void Quadro_Branco(celula **tela, int linhas, int colunas){
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
@@ -20,6 +30,24 @@ void Quadro_Branco(celula **tela, int linhas, int colunas){
     }
 }
 
+
+/*
+ * Get_Coordenada
+ *
+ * Gera uma coordenada (x ou y) baseada em uma semente, um índice e uma equação específica.
+ * 
+ * Parâmetros:
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * - int seed: A semente para a geração de números aleatórios.
+ * - int i: O índice atual, usado para variar a geração.
+ * - int old_coordenada: A coordenada anterior gerada, usada para influenciar a nova coordenada.
+ * - bool tipo: Indica se a coordenada a ser gerada é X (false) ou Y (true).
+ * - int equacao: O número da equação a ser usada para a geração (1 a 4).
+ * 
+ * Output:
+ * - int: A coordenada gerada, garantida para estar dentro dos limites especificados.
+*/
 int Get_Coordenada(int linhas, int colunas,int seed,int i,int old_coordenada,bool tipo,int equacao){ // Necessário melhorar a formula de geração de coordenadas
     int coordenada;
     
@@ -93,6 +121,27 @@ int Get_Coordenada(int linhas, int colunas,int seed,int i,int old_coordenada,boo
     return coordenada;
 }
 
+
+/*
+ * Carimbar
+ *
+ * Aplica carimbos na tela com base em vários parâmetros, incluindo o tipo de carimbo, a quantidade de carimbos a serem aplicados, e a lógica de posicionamento.
+ *
+ * Parâmetros:
+ * - celula** tela: A tela onde os carimbos serão aplicados.
+ * - ConjuntoCarimbos* carimbosPasta: Um array de conjuntos de carimbos disponíveis.
+ * - int numPastas: O número de pastas de carimbos disponíveis.
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * - int seed: A semente para a geração de números aleatórios.
+ * - int carimbo: O tipo de carimbo a ser aplicado (1 para Estrela, 2 para Soma, 3 para X, 4 para Aleatório, 5 para Naves).
+ * - int carimbadas: O número total de carimbos a serem aplicados.
+ * - int equacao: O número da equação a ser usada para a geração de coordenadas (1 a 4).
+ * - int index: O índice inicial para a geração de coordenadas.
+ * 
+ * Output:
+ * - long int: O número total de tentativas feitas para aplicar os carimbos, subtraído do número de carimbos efetivamente aplicados.
+*/
 long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,int linhas, int colunas, int seed,int carimbo,int carimbadas,int equacao,int index){
     long int guarda = 0;
     int loop = 0;
@@ -245,7 +294,17 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
     return (guarda + index) - carimbadas;
 }
 
-
+/*
+ * Imprimir_Quadro
+ *
+ * Imprime a tela no console, com a opção de usar cores para diferentes símbolos.
+ *
+ * Parâmetros:
+ * - celula **tela: A tela a ser impressa.
+ * - int linhas: O número de linhas da tela.
+ * - int colunas: O número de colunas da tela.
+ * - bool colorido: Indica se a impressão deve ser colorida (true) ou em preto e branco (false).
+*/
 void Imprimir_Quadro(celula **tela, int linhas, int colunas,bool colorido){
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
@@ -259,6 +318,15 @@ void Imprimir_Quadro(celula **tela, int linhas, int colunas,bool colorido){
     }
 }
 
+
+/*
+ * imprime_char_colorido
+ *
+ * Imprime um caractere com uma cor específica baseada no símbolo fornecido.
+ *
+ * Parâmetros:
+ * - char c: O caractere a ser impresso.
+*/
 void imprime_char_colorido(char c) {
 
     if (c == '*') {
@@ -314,6 +382,17 @@ void imprime_char_colorido(char c) {
     }
 }
 
+/*
+ * imprime_elemento
+ *
+ * Imprime um carimbo (desenho) no console, com a opção de usar cores para diferentes símbolos.
+ *
+ * Parâmetros:
+ * - char** carimbo: O carimbo (desenho) a ser impresso.
+ * - int linhas: O número de linhas do carimbo.
+ * - int colunas: O número de colunas do carimbo.
+ * - bool colorido: Indica se a impressão deve ser colorida (true) ou em preto e branco (false).
+*/
 void imprime_elemento(char** carimbo,int linhas,int colunas,bool colorido) {
     for(int i = 0; i < linhas; i++) {
         for(int j = 0; j < colunas; j++) {
@@ -327,6 +406,21 @@ void imprime_elemento(char** carimbo,int linhas,int colunas,bool colorido) {
     }
 }
 
+/*
+ * limite_desenho
+ *
+ * Calcula o limite máximo recomendado de desenhos que podem ser aplicados na tela com base no maior carimbo disponível em uma pasta específica.
+ * 
+ * Parâmetros:
+ * - ConjuntoCarimbos* Pastas: Um array de conjuntos de carimbos disponíveis.
+ * - int numPastas: O número de pastas de carimbos disponíveis.
+ * - char* nomePasta: O nome da pasta específica para a qual o limite deve ser calculado.
+ * - int linhas: O número total de linhas na tela.
+ * - int colunas: O número total de colunas na tela.
+ * 
+ * Output:
+ * - int: O limite máximo recomendado de desenhos que podem ser aplicados na tela.
+*/
 int limite_desenho(ConjuntoCarimbos* Pastas,int numPastas,char* nomePasta,int linhas,int colunas){
     int ordem_max = 0;
     ConjuntoCarimbos* desenhos;

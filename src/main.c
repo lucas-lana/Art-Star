@@ -1,4 +1,4 @@
-#include "Arquivos.c"
+#include "arquivos.c"
 #include "menus.c"
 
 #define LINHAS 20

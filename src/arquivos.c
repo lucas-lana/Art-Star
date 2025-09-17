@@ -1,5 +1,17 @@
 #include "arquivos.h"
 
+/*
+ * ler_carimbo
+ *
+ * Recebe o caminho de um arquivo de texto (.txt) e retorna seu conteúdo como uma string (vetor de caracteres).
+ * O chamador é responsável por liberar a memória alocada para a string retornada
+ *
+ * Parâmetros:
+ * - char* caminho: O caminho para o arquivo de texto a ser lido.
+ *
+ * Output:
+ * - char*: Uma string contendo o conteúdo do arquivo. Retorna NULL em caso de erro ao abrir o arquivo ou alocar memória.
+*/
 char* ler_carimbo(char* caminho) {
     FILE* leitor = fopen(caminho, "r");
     if (leitor == NULL) {
@@ -33,6 +45,18 @@ char* ler_carimbo(char* caminho) {
     return texto;
 }
 
+/*
+ * acessar_Diretorio
+ *
+ * Acessa um diretório e lê todos os arquivos de texto (.txt) presentes nele, armazenando o conteúdo e o nome de cada arquivo em uma estrutura 'Arquivo'. O chamador é responsável por liberar a memória alocada para a string retornada
+ * 
+ * Parâmetros:
+ * - char* caminho: O caminho para o diretório a ser lido.
+ *
+ * Output:
+ * - Arquivo*: Um array de estruturas 'Arquivo', onde cada estrutura contém o nome do arquivo e seu conteúdo.
+ *             O array é terminado com uma estrutura cujo campo 'nome' é NULL. Retorna NULL em caso de erro ao abrir o diretório ou alocar memória.
+ */
 Arquivo* acessar_Diretorio(char* caminho) {
     int count = 0;
     DIR *dir;
@@ -80,6 +104,17 @@ Arquivo* acessar_Diretorio(char* caminho) {
     return carimbos;
 }
 
+/*
+ * get_dim_Carimbo
+ *
+ * A partir do desenho em formato txt, obtém as dimensões (linhas/colunas) do desenho. O chamador é responsável por liberar a memória alocada para a string retornada
+ * 
+ * Parâmetros:
+ * - char* carimbo_texto: O conteúdo do arquivo de texto representando o desenho
+ *
+ * Output:
+ * - int*: Um array de dois inteiros, onde o primeiro elemento é o número de linhas e o segundo é o número de colunas do desenho.
+ */
 int* get_dim_Carimbo(char* carimbo_texto){
     int* dim = (int*)malloc(2 * sizeof(int));
     if (dim == NULL) {
@@ -103,12 +138,19 @@ int* get_dim_Carimbo(char* carimbo_texto){
     return dim;
 }
 
+
 /*
  * get_Carimbos
- * Purpose: Reads all files in the specified directory, splits their contents into lines,
- *          and processes each line as a separate "carimbo" (stamp).
- * Expected Output: Processes each carimbo line from each file; currently does not return or print,
- *                  but can be modified to store or display the results as needed.
+ *
+ * Lê todos os arquivos de texto (.txt) em um diretório especificado, interpreta o conteúdo de cada arquivo como um desenho (carimbo),
+ * e armazena cada desenho em uma estrutura 'Carimbo' dentro de uma estrutura 'Carimbos_Num'.
+ *
+ * Parâmetros:
+ * - char* caminho: O caminho para o diretório raiz contendo pastas com os arquivos de desenho.
+ *
+ * Output:
+ * - Carimbos_Num*: Uma estrutura contendo o número total de carimbos lidos e um array de estruturas 'Carimbo', cada uma representando um desenho.
+ *                  Retorna NULL em caso de erro ao acessar o diretório ou alocar memória.
  */
 Carimbos_Num* get_Carimbos(char* caminho) {
     Arquivo* carimbos = acessar_Diretorio(caminho);
@@ -206,6 +248,18 @@ Carimbos_Num* get_Carimbos(char* caminho) {
     return carimbo_array;
 }
 
+
+/*
+* get_numDir
+*
+* Conta o número de subdiretórios (pastas), apenas pastas de primeiro nível dentro de um diretório especificado.
+*
+* Parâmetros:
+* - char* caminhoRaiz: O caminho para o diretório raiz
+*
+* Output:
+* - int: O número de subdiretórios encontrados. Retorna 0 em caso de erro ao abrir o diretório.
+*/
 int get_numDir(char* caminhoRaiz){
     DIR* dir = opendir(caminhoRaiz);
     struct dirent* entrada;
@@ -213,7 +267,7 @@ int get_numDir(char* caminhoRaiz){
 
     if (dir == NULL){
         perror("Erro ao abrir o diretório\n");
-        return -1;
+        return 0;
     }
 
     while ((entrada = readdir(dir)) != NULL){
@@ -234,15 +288,25 @@ int get_numDir(char* caminhoRaiz){
 }
 
 
-
-
+/*
+* carrega_Carimbos
+*
+* Carrega os desenhos de múltiplas pastas dentro de um diretório raiz.
+*
+* Parâmetros:
+* - int numPastas: O número de pastas dentro do diretório raiz
+* - char* caminho: O caminho para o diretório raiz
+*
+* Output:
+* - ConjuntoCarimbos*: Um array de estruturas 'ConjuntoCarimbos', onde cada estrutura contém o nome da pasta, o número de carimbos e um array de carimbos.
+*                      Retorna NULL em caso de erro ao abrir o diretório ou alocar memória.
+*/
 ConjuntoCarimbos* carrega_Carimbos(int numPastas, char* caminho){
-    /*
-    1. Verificar quantidade de pastas dentro de um dado caminho de diretório
-    2. Acessar as pastas, salvando o nome da pasta dentro do campo de nome de coleção de carimbos
-    3. get_Carimbos para cada pasta dento do dado diretório raiz
-    4. Retornar o conjunto de carimbos
-    */
+    
+    if (numPastas <= 0) {
+        printf("Número de pastas inválido: %d\n", numPastas);
+        return NULL;
+    }
 
     ConjuntoCarimbos* pastas_Carimbos = (ConjuntoCarimbos*)malloc(numPastas * sizeof(ConjuntoCarimbos));
     if (pastas_Carimbos == NULL) {
