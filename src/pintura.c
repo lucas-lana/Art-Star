@@ -142,23 +142,12 @@ int Get_Coordenada(int linhas, int colunas,int seed,int i,int old_coordenada,boo
  * Output:
  * - long int: O número total de tentativas feitas para aplicar os carimbos, subtraído do número de carimbos efetivamente aplicados.
 */
-long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,int linhas, int colunas, int seed,int carimbo,int carimbadas,int equacao,int index){
+long int Carimbar(celula** tela,ConjuntoCarimbos*DirCarimbos,int linhas, int colunas, int seed,int carimbo,int carimbadas,int equacao,int index){
     long int guarda = 0;
     int loop = 0;
     int limear = pow(2,((sizeof(int)*4)));
     int x,y,old_x,old_y;
     int reset = 0;
-
-    int jndex = 0;
-    while(1){
-        if (strcmp(carimbosPasta[jndex].nomePasta, "Naves") == 0){
-            break;
-        }
-        jndex++;
-        if (jndex > numPastas){
-            return -1;
-        }
-    }
 
     while (loop < carimbadas){
 
@@ -188,7 +177,7 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
             y = Get_Coordenada(linhas,colunas,seed,index,old_y,true,equacao);
 
             switch (carimbo){
-                case 1:
+                case 2:
                     if (tela[x][y].preenchido == false){
                         Carimbo_Estrela(tela,x,y);
                         old_x = x;
@@ -206,7 +195,7 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
                     }
                 break;
 
-                case 2:
+                case 3:
                     if (Verificar_3x3(tela,x,y,linhas,colunas)){
                         Carimbo_Soma(tela,x,y);
                         old_x = x;
@@ -225,7 +214,7 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
                     }
                 break;
 
-                case 3:
+                case 4:
                     if (Verificar_3x3(tela,x,y,linhas,colunas)){
                         Carimbo_X(tela,x,y);
                         old_x = x;
@@ -243,9 +232,9 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
                     }
                 break;
             
-                case 4:
-                    int carimbo = rand() % 3;
-                    bool carimbado_Aleatorio = Carimbo_Aleatorio(tela,linhas,colunas,x,y,carimbo);
+                case 5:
+                    int carimbo_random = rand() % 3;
+                    bool carimbado_Aleatorio = Carimbo_Aleatorio(tela,linhas,colunas,x,y,carimbo_random);
                     if (carimbado_Aleatorio){
                         old_x = x;
                         old_y = y;
@@ -262,9 +251,9 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
                     }
                 break;
 
-                case 5:
-                    bool carimbado_Nave = Carimbar_Desenho(tela,carimbosPasta[jndex].carimbos,linhas, colunas,((seed + index) % 6),x,y,(index%2));
-                    if (carimbado_Nave){
+                default:
+                    bool carimbado_desenho = Carimbar_Desenho(tela,DirCarimbos[carimbo - FEATURES].carimbos,linhas, colunas,(seed + index) % (DirCarimbos[carimbo - FEATURES].quantidade),x,y,(index%2));
+                    if (carimbado_desenho){
                         old_x = x;
                         old_y = y;
                         index++;
@@ -278,8 +267,6 @@ long int Carimbar(celula** tela,ConjuntoCarimbos* carimbosPasta,int numPastas,in
                         
                         index++;
                     }
-                break;
-                default:
                 break;
             }
         }
@@ -437,4 +424,31 @@ int limite_desenho(ConjuntoCarimbos* Pastas,int numPastas,char* nomePasta,int li
             ordem_max = ordem_atual;
     }
     return (linhas * colunas / ordem_max)/2;
+}
+
+void Imprime_Desenho(Carimbo* desenho){
+
+    if (desenho == NULL) {
+        printf("Desenho invalido\n");
+        return;
+    }
+
+    celula **tela = (celula**)malloc((desenho->ordem[0]+2)*sizeof(celula*));
+    for (int i = 0; i < desenho->ordem[0]+2; i++){
+        tela[i] = (celula*)malloc((desenho->ordem[1]+2)*sizeof(celula));
+    }
+
+    Quadro_Branco(tela,desenho->ordem[0]+2,desenho->ordem[1]+2);
+    for (int i = 0; i < desenho->ordem[0]; i++){
+        for (int j = 0; j < desenho->ordem[1]; j++){
+            if (desenho->desenho[i][j] != ' '){
+                tela[i+1][j+1].simbolo = desenho->desenho[i][j];
+            }
+        }
+    }
+    Imprimir_Quadro(tela,desenho->ordem[0]+2,desenho->ordem[1]+2,false);
+    for (int i = 0; i < desenho->ordem[0]+2; i++){
+        free(tela[i]);
+    }
+    free(tela);
 }

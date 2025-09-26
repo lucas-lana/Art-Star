@@ -71,11 +71,11 @@ int Menu_Quantidade_Estrelas(int linhas, int colunas){
     return escolha;
 }
 
-int Menu_Quantidade_Naves(int limite){
+int Menu_Quantidade_Desenhos(char* desenho,int limite){
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Digite a quantidade de naves 0 à %d (menor que zero, ou maior que %d será aleatorio): ",limite, limite);
+        printf("Digite a quantidade de %s 0 à %d (menor que zero, ou maior que %d será aleatorio): ",desenho,limite,limite);
         scanf("%d",&escolha);
         if (escolha < 0 || escolha > limite){
             escolha = rand() % limite;
@@ -89,33 +89,6 @@ int Menu_Quantidade_Naves(int limite){
         }
     }
     return escolha;
-}
-
-void Imprime_Desenho(Carimbo* desenho){
-
-    if (desenho == NULL) {
-        printf("Desenho invalido\n");
-        return;
-    }
-
-    celula **tela = (celula**)malloc((desenho->ordem[0]+2)*sizeof(celula*));
-    for (int i = 0; i < desenho->ordem[0]+2; i++){
-        tela[i] = (celula*)malloc((desenho->ordem[1]+2)*sizeof(celula));
-    }
-
-    Quadro_Branco(tela,desenho->ordem[0]+2,desenho->ordem[1]+2);
-    for (int i = 0; i < desenho->ordem[0]; i++){
-        for (int j = 0; j < desenho->ordem[1]; j++){
-            if (desenho->desenho[i][j] != ' '){
-                tela[i+1][j+1].simbolo = desenho->desenho[i][j];
-            }
-        }
-    }
-    Imprimir_Quadro(tela,desenho->ordem[0]+2,desenho->ordem[1]+2,false);
-    for (int i = 0; i < desenho->ordem[0]+2; i++){
-        free(tela[i]);
-    }
-    free(tela);
 }
 
 int Menu_Continuar(){
@@ -196,43 +169,30 @@ void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
     }
 }
 
-int Menu_Forma(){
+int Menu_Forma(ConjuntoCarimbos* pastas, int numPastas){
     int escolha;
     while (1){
         printf("=================================\n");
-        printf("Escolha o tipo de figura basica a ser usada para criar a obra:\n");
-        printf("1 - Asterisco simples (Estrela).\n2 - Simbolo de soma com asteriscos (Soma).\n");
-        printf("3 - Letra X com asteriscos (X).\n4 - Formas aleátorias.\n5 - Obra de arte Galática\n");
-        printf("6 - Inspecionar figuras\n");
-        printf("7 - Sair\n");
-        printf("Escolha: ");
-        scanf("%d",&escolha);
-        if (escolha >= 1 && escolha <= 6){
-            break;
+        printf("1 - Carregar um desenho\n");
+        printf("2 - Gerar quadro estrelado.\n3 - Gerar arte de somas.\n");
+        printf("4 - Gerar quadro X.\n5 - Geração aleátorias.\n");
+        
+        for (int i = 0; i < numPastas; i++) {
+            if (pastas[i].quantidade <= 0) {
+                continue;
+            }
+            printf("%d - Gerar %s\n", i + FEATURES, pastas[i].nomePasta);
         }
-        else if (escolha == 7){
-            exit(0);
-        }
-        else {
-            printf("Opcao invalida\n");
-        }
-    }
-    return escolha;
-}
 
-int Menu_Equacao(){
-    int escolha;
-    while (1){
-        printf("=================================\n");
-        printf("Escolha a equação para obter as coordenadas:\n");
-        printf("1 - (Xi-1 * i * ((Xi-1 + seed) mod i) + seed + i) mod N_MAX\n");
-        printf("2 - (Xi-1 * i * (Xi-1 mod i) + seed + i) mod N_MAX\n");
-        printf("3 - (Xi-1 * i * (i mod N_max) + seed + i) mod N_MAX\n");
-        printf("4 - ((Xi-1 * i * N_MAX) + seed + i) mod N_MAX\n");
+        printf("%d - Inspecionar figuras\n",numPastas + FEATURES);
+        printf("%d - Sair\n", numPastas + 7);
         printf("Escolha: ");
         scanf("%d",&escolha);
-        if (escolha >= 1 && escolha <= 4){
+        if (escolha >= 1 && escolha <= numPastas + FEATURES){
             break;
+        }
+        else if (escolha == numPastas + 7){
+            exit(0);
         }
         else {
             printf("Opcao invalida\n");

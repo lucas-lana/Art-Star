@@ -5,9 +5,8 @@
 
 int Menu_seed();
 int Menu_Quantidade();
-void Imprime_desenho(int escolha);
 void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas);
-int Menu_Forma();
+int Menu_Forma(ConjuntoCarimbos* pastas,int numPastas);
 int Menu_Equacao();
 bool Menu_Reinicio();
 int Menu_Continuar();

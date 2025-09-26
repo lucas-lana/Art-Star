@@ -1,5 +1,6 @@
 #ifndef CARIMBO_H
 #define CARIMBO_H
+#define FEATURES 6
 
 #include "celula.h"
 
