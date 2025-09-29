@@ -1,4 +1,3 @@
-#include "arquivos.c"
 #include "menus.c"
 
 #define LINHAS 20
@@ -24,8 +23,8 @@ int main(){
     if (carimbos == NULL) {
         return 1;
     }
-    
-    printf("PROGRAMA GERADOR DE OBRA DE ARTE:\n"); // Título da aplicação
+
+    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
 
     while (reinicio) {
         Quadro_Branco(tela,LINHAS,COLUNAS);

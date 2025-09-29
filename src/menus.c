@@ -1,5 +1,116 @@
+#include <ctype.h>
+
 #include "menus.h"
 #include "pintura.c"
+#include "arquivos.c"
+
+#define ALFABETO "/home/Lucas/Documentos/Codes/C/Trabalhos/Art-Star/Fontes/Big-nw"
+
+void Tela_Titulo(char* nomeTitulo,char preenchimento,int trocaCor,char** cores){
+    int tamanhoTitulo = strlen(nomeTitulo);
+    
+    Carimbos_Num* letras = get_Carimbos(ALFABETO);
+    if (letras == NULL) {
+        printf("Erro ao carregar carimbos do alfabeto.\n");
+        return;
+    }
+
+    // Aloca array de carimbos individuais, não Carimbos_Num
+    Carimbo* titulo = malloc(tamanhoTitulo * sizeof(Carimbo));
+    if (titulo == NULL) {
+        free(letras);
+        return;
+    }
+    
+    // Inicializa cada carimbo do título
+    for (int i = 0; i < tamanhoTitulo; i++){
+        bool encontrou = false;
+        for (int j = 0; j < letras->quantidade; j++){  // Corrigido: j < quantidade
+            if (toupper(nomeTitulo[i]) == toupper(letras->carimbos[j].nome[0])){
+                titulo[i] = letras->carimbos[j];  // Copia todo o carimbo
+                encontrou = true;
+                break;
+            }
+        }
+        // Se não encontrou a letra, usa espaço ou caractere padrão
+        if (!encontrou) {
+            strcpy(titulo[i].nome, " ");
+            titulo[i].ordem[0] = 10;
+            titulo[i].ordem[1] = 3;
+            // Preenche com espaços
+            titulo[i].desenho = malloc(titulo[i].ordem[0] * sizeof(char*));
+            for (int linha = 0; linha < titulo[i].ordem[0]; linha++) {
+                titulo[i].desenho[linha] = malloc((titulo[i].ordem[1] + 1) * sizeof(char));
+                titulo[i].desenho[linha][titulo[i].ordem[1]] = '\0'; // Null-terminate
+            }
+            for (int linha = 0; linha < titulo[i].ordem[0]; linha++) {
+                for (int col = 0; col < titulo[i].ordem[1]; col++) {
+                    titulo[i].desenho[linha][col] = ' ';
+                }
+            }
+        }
+    }
+    
+    // Imprimir o título
+    int cor = 0;
+
+    for (int linha = 0; linha < 10; linha++){
+        for (int letra = 0; letra < tamanhoTitulo; letra++){  // Corrigido: itera por todas as letras
+            for (int coluna = 0; coluna < titulo[letra].ordem[1] - 1; coluna++){  // Corrigido: titulo[letra] em vez de titulo->carimbos[letra]
+                char caractere = titulo[letra].desenho[linha][coluna];
+                
+                if (caractere == '$'){
+                    caractere = preenchimento;
+                }
+
+                if (trocaCor >= 1 && cores != NULL) {
+
+                    char cor_upper[16];
+                    strncpy(cor_upper, cores[cor], sizeof(cor_upper) - 1);
+                    cor_upper[sizeof(cor_upper) - 1] = '\0';
+                    for (int idx = 0; cor_upper[idx]; idx++) {
+                        cor_upper[idx] = toupper((unsigned char)cor_upper[idx]);
+                    }
+
+                    if (strcmp(cor_upper,"BRANCO") == 0)
+                        printf("%c", caractere);
+                    else if (strcmp(cor_upper,"VERMELHO") == 0)
+                        printf("\033[31m%c\033[0m", caractere);
+                    else if (strcmp(cor_upper,"VERDE") == 0)
+                        printf("\033[32m%c\033[0m", caractere);
+                    else if (strcmp(cor_upper,"AMARELO") == 0)
+                        printf("\033[33m%c\033[0m", caractere);
+                    else if (strcmp(cor_upper,"AZUL") == 0)
+                        printf("\033[34m%c\033[0m", caractere);
+                    else if (strcmp(cor_upper,"MAGENTA") == 0)
+                        printf("\033[35m%c\033[0m", caractere);
+                    else if (strcmp(cor_upper,"CIANO") == 0)
+                        printf("\033[36m%c\033[0m", caractere);
+                    else if (strcmp(cor_upper,"PRETO") == 0)
+                        printf("\033[30m%c\033[0m", caractere);
+                    else
+                        printf("%c", caractere);  // Cor padrão se não reconhecida
+                }
+                else
+                    printf("%c", caractere);
+            }
+        }
+        printf("\n");
+        if (trocaCor > 0) {
+            if ((linha % trocaCor) == 0 && linha != 0) {
+            cor++;
+            if (cor >= trocaCor) {
+                cor = 0;
+            }
+            }
+        }
+    }
+    free(titulo);
+    free(letras->carimbos);
+    free(letras);
+}
+
+
 
 int Menu_Seed(){
     int escolha;

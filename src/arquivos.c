@@ -69,7 +69,6 @@ Arquivo* acessar_Diretorio(char* caminho) {
         return NULL;
     }
 
-    printf("Conteúdo do diretório '%s':\n", caminho);
     while ((entrada = readdir(dir)) != NULL) {
         // entry->d_name é o nome do arquivo/diretório
         if (entrada->d_name[0] != '.') {
