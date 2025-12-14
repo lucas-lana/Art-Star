@@ -70,7 +70,7 @@ int main(){
 
         else {
             seed = Menu_Seed();
-            quantidade = Menu_Quantidade();
+            quantidade = Menu_Quantidade_Desenhos("figuras", 100);
             rep = Carimbar(tela,carimbos,LINHAS,COLUNAS,seed,forma,quantidade,1,0);
         }
             

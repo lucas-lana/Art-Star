@@ -4,8 +4,22 @@
 #include "pintura.c"
 #include "arquivos.c"
 
-#define ALFABETO "/home/Lucas/Documentos/Codes/C/Trabalhos/Art-Star/Fontes/Big-nw"
-
+#define ALFABETO "../../Fontes/Big-nw/" // Caminho para a pasta do alfabeto
+/*
+ * Tela_Titulo
+ *
+ * Primeiro executa o comando clear no terminal e depois imprime o título da aplicação no console com a 
+ * opção de usar cores diferentes cores, ou  mudar o preenchimento da letra por diferentes símbolos.
+ *
+ * Parâmetros:
+ * - char* nomeTitulo: A string que contêm o título que deseja imprimir.
+ * - char preenchimento: O carácter que vai preencher o interior das letras (Ex:@).
+ * - int trocaCor: Representa de quantas em quantas linhas a cor vai mudar.
+ * - char** cores: Uma lista das cores que vão ser usadas no título (Ex: ["Azul", "vermelho"]). 
+ * 
+ * Cores disponíveis:
+ *  - Branco, Vermelho, Verde, Amarelo, Azul, Magenta, Ciano e Preto.
+*/
 void Tela_Titulo(char* nomeTitulo,char preenchimento,int trocaCor,char** cores){
     int tamanhoTitulo = strlen(nomeTitulo);
     
@@ -112,9 +126,16 @@ void Tela_Titulo(char* nomeTitulo,char preenchimento,int trocaCor,char** cores){
 }
 
 
-
+/*
+ * Menu_Seed
+ *
+ * Menu para receber a seed do desenho. Antes de aparecer o menu, é acionado a função Tela_Titulo().
+ * 
+ * Output:
+ * - int: A seed escolhida pelo usuário.
+*/
 int Menu_Seed(){
-    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
+    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});
     int escolha;
     srand(time(NULL));
     while (1){
@@ -137,31 +158,18 @@ int Menu_Seed(){
     return escolha;
 }
 
-
-int Menu_Quantidade(){
-    int escolha;
-    while (1){
-        printf("=================================\n");
-        printf("Digite a quantidade de figuras 1 à 100 (menor ou igual a zero será aleatorio): ");
-        scanf("%d",&escolha);
-        if (escolha <= 0){
-            escolha = rand() % 100;
-            break;
-        }
-        else if (escolha >= 100){
-            escolha = 100;
-            break;
-        }
-        else if (escolha > 0 && escolha < 100){
-            break;
-        }
-        else {
-            printf("Opcao invalida\n");
-        }
-    }
-    return escolha;
-}
-
+/*
+* Menu_Quantidade_Estrelas
+*
+* Menu para receber a quantidade de estrelas a serem desenhadas na tela.
+*
+* Parâmetros:
+* - int linhas: O número total de linhas na tela.
+* - int colunas: O número total de colunas na tela.
+*
+* Output:
+* - int: A quantidade de estrelas escolhida pelo usuário.
+*/
 int Menu_Quantidade_Estrelas(int linhas, int colunas){
     int limite = (linhas * colunas) / ((linhas * colunas)/100);
     int escolha;
@@ -183,6 +191,18 @@ int Menu_Quantidade_Estrelas(int linhas, int colunas){
     return escolha;
 }
 
+/*
+* Menu_Quantidade_Desenhos
+*
+* Menu para receber a quantidade de desenhos a serem desenhados na tela.
+*
+* Parâmetros:
+* - char* desenho: O nome do tipo de desenho.
+* - int limite: O limite máximo de desenhos permitidos.
+*
+* Output:
+* - int: A quantidade de desenhos escolhida pelo usuário.
+*/
 int Menu_Quantidade_Desenhos(char* desenho,int limite){
     int escolha;
     while (1){
@@ -203,6 +223,15 @@ int Menu_Quantidade_Desenhos(char* desenho,int limite){
     return escolha;
 }
 
+/*
+* Menu_Desenhos
+*
+* Menu para inspecionar os desenhos disponíveis. O usuário pode escolher uma pasta e depois um desenho específico para visualizar.
+*
+* Parâmetros:
+* - ConjuntoCarimbos* carimbos: Um array de conjuntos de carimbos disponíveis.
+* - int numPastas: O número de pastas de carimbos disponíveis.
+*/
 void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
     int escolha_Pasta, escolha_Desenho;
 
@@ -212,7 +241,7 @@ void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
     }
     
     while (1){
-        Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
+        Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});
         printf("=================================\n");
         printf("Escolha a pasta do desenho:\n");
         for (int i = 0; i < numPastas; i++) {
@@ -261,8 +290,21 @@ void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
     }
 }
 
+/*
+* Menu_Forma
+*
+* Menu para selecionar a forma de desenho a ser aplicada na tela. A função exibe uma lista de opções, 
+* incluindo formas predefinidas e pastas de carimbos carregadas.
+* 
+* Parâmetros:
+* - ConjuntoCarimbos* pastas: Um array de conjuntos de carimbos disponíveis.
+* - int numPastas: O número de pastas de carimbos disponíveis.
+* 
+* Output:
+* - int: O índice da forma selecionada pelo usuário.
+*/
 int Menu_Forma(ConjuntoCarimbos* pastas, int numPastas){
-    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
+    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});
     int escolha;
     while (1){
         printf("=================================\n");
@@ -295,6 +337,20 @@ int Menu_Forma(ConjuntoCarimbos* pastas, int numPastas){
     return escolha;
 }
 
+/*
+* Menu_Salvar
+*
+* Menu para salvar a arte criada em um arquivo. A arte é salva em um arquivo de texto com o nome fornecido pelo usuário.
+*
+* Parâmetros:
+* - celula **tela: A tela onde a arte será salva.
+* - int linhas: O número de linhas da tela.
+* - int colunas: O número de colunas da tela.
+* - int seed: A seed usada para gerar a arte.
+* - int hits: O número de conflitos na arte.
+* - int formas: O número de formas na arte.
+* - int naves: O número de naves na arte.
+*/
 void Menu_Salvar(celula** tela,int linhas,int colunas,int seed,int hits, int formas, int naves){
     FILE *arquivo;
     char nome[64];
@@ -322,6 +378,19 @@ void Menu_Salvar(celula** tela,int linhas,int colunas,int seed,int hits, int for
     fclose(arquivo);
 }
 
+/*
+* Menu_Carregar
+*
+* Menu para carregar uma arte existente a partir de um arquivo.
+* 
+* Parâmetros:
+* - celula **tela: A tela onde a arte será carregada.
+* - int linhas: O número de linhas da tela.
+* - int colunas: O número de colunas da tela.
+* 
+* Output:
+* - int*: Um array contendo a seed, o número de conflitos, o número de formas e o número de naves carregados do arquivo, em suma a arte é carregada.
+*/
 int* Menu_Carregar(celula** tela,int linhas,int colunas){ 
     FILE *arquivo;
     char nome[64];
@@ -373,7 +442,11 @@ int* Menu_Carregar(celula** tela,int linhas,int colunas){
     return p;
 }
 
-
+/*
+* Menu_Arquivo
+*
+* Menu para perguntar ao usuário se deseja salvar a arte criada. Ao salvar é chamado o Menu_Salvar.
+*/
 void Menu_Arquivo(celula** tela,int linhas,int colunas,int seed,int hits, int formas, int naves){
     int escolha;
     while (1){
@@ -395,6 +468,14 @@ void Menu_Arquivo(celula** tela,int linhas,int colunas,int seed,int hits, int fo
     }
 }
 
+/*
+* Menu_Arquivo_Carregar
+*
+* Menu para perguntar ao usuário se deseja carregar uma arte existente.
+* 
+* Output:
+* - bool: Retorna false se o usuário desejar carregar uma arte, true caso contrário.
+*/
 bool Menu_Arquivo_Carregar(){
     int escolha;
     bool retorno;

@@ -4,7 +4,7 @@
 #include "carimbos.h"
 
 int Menu_Seed();
-int Menu_Quantidade();
+int Menu_Quantidade_Desenhos(char* desenho,int limite);
 void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas);
 int Menu_Forma(ConjuntoCarimbos* pastas,int numPastas);
 int Menu_Quantidade_Estrelas(int linhas, int colunas);
