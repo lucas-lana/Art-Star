@@ -23,6 +23,7 @@ void Tela_Titulo(char* nomeTitulo,char preenchimento,int trocaCor,char** cores){
     }
     
     // Inicializa cada carimbo do título
+    system("clear");
     for (int i = 0; i < tamanhoTitulo; i++){
         bool encontrou = false;
         for (int j = 0; j < letras->quantidade; j++){  // Corrigido: j < quantidade
@@ -113,21 +114,21 @@ void Tela_Titulo(char* nomeTitulo,char preenchimento,int trocaCor,char** cores){
 
 
 int Menu_Seed(){
+    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
     int escolha;
     srand(time(NULL));
     while (1){
         printf("=================================\n");
-        printf("Deseja escolher a seed para a arte?\n1 - Sim\n2 - Nao\n");
-        printf("Escolha: ");
+        printf("Digite uma seed para a arte (digite -1 para ser aleátório)\n");
+        printf("Seed: ");
         scanf("%d",&escolha);
-        if (escolha == 1){
-            printf("Digite a seed desejada: ");
-            scanf("%d",&escolha);
-            break;
-        }
-        else if (escolha == 2){
+
+        if (escolha == -1){
             escolha = rand();
             break;
+        }
+        else if (escolha >= 0){
+            break;   
         }
         else {
             printf("Opcao invalida\n");
@@ -202,26 +203,6 @@ int Menu_Quantidade_Desenhos(char* desenho,int limite){
     return escolha;
 }
 
-int Menu_Continuar(){
-    int escolha;
-    while (1){
-        printf("=================================\n");
-        printf("Deseja inspecionar outro desenho?\n1 - Sim\n2 - Nao\n");
-        printf("Escolha: ");
-        scanf("%d",&escolha);
-        if (escolha == 1){
-            break;
-        }
-        else if (escolha == 2){
-            break;
-        }
-        else {
-            printf("Opcao invalida\n");
-        }
-    }
-    return escolha;
-}
-
 void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
     int escolha_Pasta, escolha_Desenho;
 
@@ -231,6 +212,7 @@ void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
     }
     
     while (1){
+        Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
         printf("=================================\n");
         printf("Escolha a pasta do desenho:\n");
         for (int i = 0; i < numPastas; i++) {
@@ -243,13 +225,12 @@ void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
         printf("Escolha: ");
         scanf("%d",&escolha_Pasta);
         if (escolha_Pasta >= 1 && escolha_Pasta <= numPastas){
-
+            
             while (1) {
                 if (carimbos[escolha_Pasta - 1].quantidade <= 0) {
                     printf("Nenhum carimbo disponível nesta pasta.\n");
                     break;
                 }
-
                 printf("=================================\n");
                 printf("Escolha o desenho (numero):\n");
                 for (int j = 0; j < carimbos[escolha_Pasta - 1].quantidade; j++) {
@@ -281,6 +262,7 @@ void Menu_Desenhos(ConjuntoCarimbos* carimbos, int numPastas){
 }
 
 int Menu_Forma(ConjuntoCarimbos* pastas, int numPastas){
+    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
     int escolha;
     while (1){
         printf("=================================\n");
@@ -303,6 +285,7 @@ int Menu_Forma(ConjuntoCarimbos* pastas, int numPastas){
             break;
         }
         else if (escolha == numPastas + 7){
+            system("clear");
             exit(0);
         }
         else {
@@ -310,30 +293,6 @@ int Menu_Forma(ConjuntoCarimbos* pastas, int numPastas){
         }
     }
     return escolha;
-}
-
-bool Menu_Reinicio(){
-    int escolha;
-    bool retorno;
-    while (1){
-        printf("=================================\n");
-        printf("Deseja reiniciar o programa?\n1 - Sim\n2 - Nao\n");
-        printf("Escolha: ");
-        scanf("%d",&escolha);
-        if (escolha == 1){
-            retorno = true;
-            break;
-        }
-        else if (escolha == 2){
-            retorno = false;
-            exit(0);
-            break;
-        }
-        else {
-            printf("Opcao invalida\n");
-        }
-    }
-    return retorno;
 }
 
 void Menu_Salvar(celula** tela,int linhas,int colunas,int seed,int hits, int formas, int naves){
@@ -419,6 +378,7 @@ void Menu_Arquivo(celula** tela,int linhas,int colunas,int seed,int hits, int fo
     int escolha;
     while (1){
         printf("=================================\n");
+        sleep(2);
         printf("Deseja salvar a arte?\n1 - Salvar\n2 - Nao Salvar\n");
         printf("Escolha: ");
         scanf("%d",&escolha);

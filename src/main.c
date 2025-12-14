@@ -6,7 +6,6 @@
 #define FEATURES 6
 
 int main(){
-    bool reinicio = true;
     long int rep;
     int estrelas;
     int naves = 0;
@@ -24,9 +23,7 @@ int main(){
         return 1;
     }
 
-    Tela_Titulo("Art - Star +",'@',5,(char*[]){"Vermelho","Magenta","Azul"});// Título da aplicação
-
-    while (reinicio) {
+    while (true) {
         Quadro_Branco(tela,LINHAS,COLUNAS);
         
         int forma = Menu_Forma(carimbos,numPastas);
@@ -49,12 +46,7 @@ int main(){
         }
 
         else if (forma == numPastas + FEATURES){
-            while (true){
-                Menu_Desenhos(carimbos, numPastas);
-                if (Menu_Continuar() == 2){
-                    break;
-                }
-            }
+            Menu_Desenhos(carimbos, numPastas);
         }
 
         else if (forma == 1) {
@@ -98,7 +90,6 @@ int main(){
 
             Menu_Arquivo(tela,LINHAS,COLUNAS, seed, rep, quantidade, naves);
         }
-        reinicio = Menu_Reinicio();
     }
     return 0;
 }

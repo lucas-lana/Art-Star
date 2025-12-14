@@ -293,6 +293,7 @@ long int Carimbar(celula** tela,ConjuntoCarimbos*DirCarimbos,int linhas, int col
  * - bool colorido: Indica se a impressão deve ser colorida (true) ou em preto e branco (false).
 */
 void Imprimir_Quadro(celula **tela, int linhas, int colunas,bool colorido){
+    system("clear");
     for (int i = 0; i < linhas; i++){
         for (int j = 0; j < colunas; j++){
             if (colorido) {
