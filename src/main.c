@@ -1,37 +1,43 @@
 #include "menus.c"
 
-#define LINHAS 20
-#define COLUNAS 80
+#define LINHAS 20 // Definição da altura da tela
+#define COLUNAS 80 // Definição da largura da tela
 #define CAMINHO "../../carimbos/"  // Caminho padrão para a pasta de carimbos
-#define FEATURES 6
+#define FEATURES 6 // Número de opções fixas no menu antes das pastas de carimbos personalizadas
 
 int main(){
-    long int rep;
-    int estrelas;
+    long int rep; // número de posições já preenchidas
+    int estrelas; 
     int naves = 0;
-    int quantidade;
+    int quantidade; // Quantidade de desenhos a serem feitos na tela
+    
+    // Alocação dinâmica da tela
     celula **tela = malloc(LINHAS * sizeof(celula *));
     for (int i = 0; i < LINHAS; i++) {
         tela[i] = malloc(COLUNAS * sizeof(celula));
     }
+
+    // Carregamento a quantidade de pastas de carimbos/desenhos
     int numPastas = get_numDir(CAMINHO);
     if (numPastas <= 0) {
         return 1;
     }
+
+    // Carregamento dos carimbos/desenhos
     ConjuntoCarimbos* carimbos = carrega_Carimbos(numPastas, CAMINHO);
     if (carimbos == NULL) {
         return 1;
     }
 
-    while (true) {
-        Quadro_Branco(tela,LINHAS,COLUNAS);
+    while (true) { // Loop principal do programa, sempre retorna ao menu após concluir uma ação
+        Quadro_Branco(tela,LINHAS,COLUNAS); // Inicializa a tela em branco
         
-        int forma = Menu_Forma(carimbos,numPastas);
+        int forma = Menu_Forma(carimbos,numPastas); // Exibe o menu de seleção de forma/desenho, dentro do menu chama Tela_Titulo()
         int seed;
         int quantidadeDesenhos;
         long int conflito_desenhos;
 
-        if (forma >= FEATURES && forma < numPastas + FEATURES){
+        if (forma >= FEATURES && forma < numPastas + FEATURES){ // Seleção de uma pasta de carimbos personalizada
             seed = Menu_Seed();
             quantidadeDesenhos = Menu_Quantidade_Desenhos(carimbos[forma - FEATURES].nomePasta,limite_desenho(carimbos,numPastas,carimbos[forma - FEATURES].nomePasta,LINHAS,COLUNAS));
             conflito_desenhos = Carimbar(tela,carimbos,LINHAS,COLUNAS,seed,forma,quantidadeDesenhos,1,0);
@@ -45,11 +51,11 @@ int main(){
             }
         }
 
-        else if (forma == numPastas + FEATURES){
+        else if (forma == numPastas + FEATURES){ // Inspeção de desenhos
             Menu_Desenhos(carimbos, numPastas);
         }
 
-        else if (forma == 1) {
+        else if (forma == 1) { // Carregar uma obra de arte salva um de arquivo .txt
             int rep,seed,formas,naves;
             int *p = Menu_Carregar(tela,LINHAS,COLUNAS);
             seed = p[0];
@@ -68,14 +74,13 @@ int main(){
             printf("Posições já preenchidas: %d\n",rep);
         }
 
-        else {
+        else { // Geração de formas básicas (estrelas, somas, X ou aleatórias)
             seed = Menu_Seed();
             quantidade = Menu_Quantidade_Desenhos("figuras", 100);
             rep = Carimbar(tela,carimbos,LINHAS,COLUNAS,seed,forma,quantidade,1,0);
         }
             
-        //int equacao = Menu_Equacao();
-        if (forma != numPastas + FEATURES && forma != 1){
+        if (forma != numPastas + FEATURES && forma != 1){ // Se não for inspeção de desenhos ou carregamento de arquivo
             Imprimir_Quadro(tela,LINHAS,COLUNAS,false);
             printf("Seed: %d\n",seed);
             if (forma == 5){
