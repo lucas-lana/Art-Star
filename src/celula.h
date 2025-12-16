@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <math.h>
+#include <unistd.h>
 
 typedef struct celula{
     char simbolo;
